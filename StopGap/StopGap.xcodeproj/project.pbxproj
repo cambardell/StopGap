@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A9913421C48648300C20FC8 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 1A9913411C48648300C20FC8 /* Assets */; };
 		1AA543AE1C484C9D00024CAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA543AD1C484C9D00024CAE /* AppDelegate.swift */; };
 		1AA543B01C484C9D00024CAE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1AA543AF1C484C9D00024CAE /* GameScene.sks */; };
 		1AA543B21C484C9D00024CAE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA543B11C484C9D00024CAE /* GameScene.swift */; };
@@ -16,6 +17,7 @@
 		1AA543BC1C484C9D00024CAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AA543BA1C484C9D00024CAE /* LaunchScreen.storyboard */; };
 		1AA543C71C484C9D00024CAE /* StopGapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA543C61C484C9D00024CAE /* StopGapTests.swift */; };
 		1AA543D21C484C9D00024CAE /* StopGapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA543D11C484C9D00024CAE /* StopGapUITests.swift */; };
+		1AA543E01C4863B900024CAE /* RampMan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA543DF1C4863B900024CAE /* RampMan.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A9913411C48648300C20FC8 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = StopGap/Assets; sourceTree = "<group>"; };
 		1AA543AA1C484C9D00024CAE /* StopGap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StopGap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA543AD1C484C9D00024CAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1AA543AF1C484C9D00024CAE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 		1AA543CD1C484C9D00024CAE /* StopGapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StopGapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA543D11C484C9D00024CAE /* StopGapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopGapUITests.swift; sourceTree = "<group>"; };
 		1AA543D31C484C9D00024CAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1AA543DF1C4863B900024CAE /* RampMan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RampMan.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 				1AA543C51C484C9D00024CAE /* StopGapTests */,
 				1AA543D01C484C9D00024CAE /* StopGapUITests */,
 				1AA543AB1C484C9D00024CAE /* Products */,
+				1A9913411C48648300C20FC8 /* Assets */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +109,7 @@
 				1AA543AD1C484C9D00024CAE /* AppDelegate.swift */,
 				1AA543AF1C484C9D00024CAE /* GameScene.sks */,
 				1AA543B11C484C9D00024CAE /* GameScene.swift */,
+				1AA543DF1C4863B900024CAE /* RampMan.swift */,
 				1AA543B31C484C9D00024CAE /* GameViewController.swift */,
 				1AA543B51C484C9D00024CAE /* Main.storyboard */,
 				1AA543B81C484C9D00024CAE /* Assets.xcassets */,
@@ -235,6 +241,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A9913421C48648300C20FC8 /* Assets in Resources */,
 				1AA543B01C484C9D00024CAE /* GameScene.sks in Resources */,
 				1AA543BC1C484C9D00024CAE /* LaunchScreen.storyboard in Resources */,
 				1AA543B91C484C9D00024CAE /* Assets.xcassets in Resources */,
@@ -263,6 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AA543E01C4863B900024CAE /* RampMan.swift in Sources */,
 				1AA543B21C484C9D00024CAE /* GameScene.swift in Sources */,
 				1AA543B41C484C9D00024CAE /* GameViewController.swift in Sources */,
 				1AA543AE1C484C9D00024CAE /* AppDelegate.swift in Sources */,
@@ -411,6 +419,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bardell.StopGap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -422,6 +431,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bardell.StopGap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -494,6 +504,7 @@
 				1AA543D81C484C9D00024CAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1AA543D91C484C9D00024CAE /* Build configuration list for PBXNativeTarget "StopGapTests" */ = {
 			isa = XCConfigurationList;
@@ -502,6 +513,7 @@
 				1AA543DB1C484C9D00024CAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1AA543DC1C484C9D00024CAE /* Build configuration list for PBXNativeTarget "StopGapUITests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +522,7 @@
 				1AA543DE1C484C9D00024CAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
