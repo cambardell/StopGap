@@ -14,7 +14,7 @@ class GameScene: SKScene {
     var line2 = SKShapeNode()
 
     override func didMoveToView(view: SKView) {
-        addMan(CGPointMake(frame.size.width/10, frame.size.height/2))
+        addMan(CGPointMake(frame.size.width/2, frame.size.height/10))
         line = SKShapeNode(rectOfSize: CGSize(width: 1, height: frame.size.height))
         line.fillColor = SKColor.blackColor()
         line.strokeColor = SKColor.blackColor()
@@ -31,6 +31,7 @@ class GameScene: SKScene {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
+        
         for touch in touches {
             let touchposition = touch.locationInNode(self)
             if touchposition.x > frame.size.width/1.5 {
@@ -57,19 +58,37 @@ class GameScene: SKScene {
     }
     
     func moveMan(lane: Int) {
+        let stopRampMan = (SKAction.runBlock({
+            print("done")
+            self.rampMoveEnded()
+        }))
         switch lane {
         case 1:
             print("one")
-            rampMan.position.x = frame.size.width/1.2
+            rampMoveEnded()
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.5))
+            let moveAction = (SKAction.sequence([moveRampMan, stopRampMan]))
+            rampMan.runAction(moveAction)
         case 2:
             print("two")
-            rampMan.position.x = frame.size.width/2
+            rampMoveEnded()
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/2, rampMan.position.y), duration: 0.5))
+            let moveAction = (SKAction.sequence([moveRampMan, stopRampMan]))
+            rampMan.runAction(moveAction)
         case 3:
             print("three")
-            rampMan.position.x = frame.size.width/6
+            rampMoveEnded()
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.5))
+            let moveAction = (SKAction.sequence([moveRampMan, stopRampMan]))
+            rampMan.runAction(moveAction)
+
         default:
              break
         }
         
+    }
+    
+    func rampMoveEnded() {
+        rampMan.removeAllActions()
     }
 }
