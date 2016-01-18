@@ -14,20 +14,20 @@ class GameScene: SKScene {
     var laneNumber = 2
 
     override func didMoveToView(view: SKView) {
-        addMan(CGPointMake(frame.size.width/2, frame.size.height/10))
-        addLine(CGPoint(x: frame.size.width/1.5, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/1.5, y: 0))
-        addLine(CGPoint(x: frame.size.width/3, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/3, y: 0))
-        }
+        addMan(CGPointMake(frame.size.width / 2, frame.size.height / 9))
+        addLine(CGPoint(x: frame.size.width / 1.5, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/1.5, y: 0))
+        addLine(CGPoint(x: frame.size.width / 3, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/3, y: 0))
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
         for touch in touches {
             let touchposition = touch.locationInNode(self)
-            if touchposition.x > frame.size.width/1.5 {
+            if touchposition.x > frame.size.width / 1.5 {
                 rampManMoveRight = true
                 moveMan(1)
             }
-            if touchposition.x < frame.size.width/1.5 && touchposition.x > frame.size.width/3 {
+            if touchposition.x < frame.size.width / 1.5 && touchposition.x > frame.size.width / 3 {
                 moveMan(2)
                 
                 if laneNumber == 1 {
@@ -47,13 +47,13 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        if rampMan.position.x > frame.size.width/1.5 {
+        if rampMan.position.x > frame.size.width / 1.5 {
             laneNumber = 1
         }
-        if rampMan.position.x < frame.size.width/1.5 && rampMan.position.x < frame.size.width/3 {
+        if rampMan.position.x < frame.size.width / 1.5 && rampMan.position.x < frame.size.width/3 {
             laneNumber = 2
         }
-        if rampMan.position.x < frame.size.width/3 {
+        if rampMan.position.x < frame.size.width / 3 {
             laneNumber = 3
         }
     }
@@ -61,7 +61,8 @@ class GameScene: SKScene {
     func addMan (position: CGPoint) {
         // returns a new man
         rampMan = RampMan(position: position)
-        rampMan.setScale(0.5)
+        rampMan.size.width = frame.size.width/8
+        rampMan.size.height = frame.size.width/8
         self.addChild(rampMan)
 
     }
@@ -128,6 +129,5 @@ class GameScene: SKScene {
         line.strokeColor = SKColor.blackColor()
         line.lineWidth = 1
         addChild(line)
-
     }
 }
