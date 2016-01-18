@@ -27,6 +27,7 @@ class GameScene: SKScene {
             let touchposition = touch.locationInNode(self)
             if touchposition.x > frame.size.width/1.5 {
                 laneNumber = 1
+                rampManMoveRight = true
                 moveMan(1)
             }
             if touchposition.x < frame.size.width/1.5 && touchposition.x > frame.size.width/3 {
@@ -42,6 +43,7 @@ class GameScene: SKScene {
             }
             if touchposition.x < frame.size.width/3 {
                 moveMan(3)
+                rampManMoveRight = false
                 laneNumber = 3
             }
         }
@@ -51,10 +53,11 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
+    
     func addMan (position: CGPoint) {
         // returns a new man
         rampMan = RampMan(position: position)
-        rampMan.setScale(3)
+        rampMan.setScale(0.5)
         self.addChild(rampMan)
 
     }
@@ -71,7 +74,7 @@ class GameScene: SKScene {
             rampMan.zRotation = 0
             let rotate = SKAction.rotateByAngle(-0.5, duration: 0.1)
             let endRotation = SKAction.rotateByAngle(0.5, duration: 0.1)
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.5))
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.3))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
         case 2:
@@ -88,7 +91,7 @@ class GameScene: SKScene {
                 rotate = SKAction.rotateByAngle(-0.5, duration: 0.1)
                 endRotation = SKAction.rotateByAngle(0.5, duration: 0.1)
             }
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/2, rampMan.position.y), duration: 0.5))
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/2, rampMan.position.y), duration: 0.3))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
         case 3:
@@ -97,7 +100,7 @@ class GameScene: SKScene {
             let endRotation = SKAction.rotateByAngle(-0.5, duration: 0.1)
             rampMoveEnded()
             rampMan.zRotation = 0
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.5))
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.3))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
 
