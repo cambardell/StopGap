@@ -17,16 +17,13 @@ class GameScene: SKScene {
         addMan(CGPointMake(frame.size.width/2, frame.size.height/10))
         addLine(CGPoint(x: frame.size.width/1.5, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/1.5, y: 0))
         addLine(CGPoint(x: frame.size.width/3, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/3, y: 0))
-        
         }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
-        
         for touch in touches {
             let touchposition = touch.locationInNode(self)
             if touchposition.x > frame.size.width/1.5 {
-                laneNumber = 1
                 rampManMoveRight = true
                 moveMan(1)
             }
@@ -39,12 +36,10 @@ class GameScene: SKScene {
                 if laneNumber == 3 {
                     rampManMoveRight = false
                 }
-                laneNumber = 2
             }
             if touchposition.x < frame.size.width/3 {
                 moveMan(3)
                 rampManMoveRight = false
-                laneNumber = 3
             }
         }
 
@@ -52,6 +47,15 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        if rampMan.position.x > frame.size.width/1.5 {
+            laneNumber = 1
+        }
+        if rampMan.position.x < frame.size.width/1.5 && rampMan.position.x < frame.size.width/3 {
+            laneNumber = 2
+        }
+        if rampMan.position.x < frame.size.width/3 {
+            laneNumber = 3
+        }
     }
     
     func addMan (position: CGPoint) {
