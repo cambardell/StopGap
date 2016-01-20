@@ -21,7 +21,7 @@ class GameScene: SKScene {
     var buildings = [Building]()
     var buildingSpeed:CGFloat = 10.0
     
-
+    //MARK: Did move to view
     override func didMoveToView(view: SKView) {
         //Initialize objects
         addMan(CGPointMake(frame.size.width / 2, frame.size.height / 9))
@@ -29,6 +29,7 @@ class GameScene: SKScene {
         addLine(CGPoint(x: frame.size.width / 3, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/3, y: 0))
     }
     
+    //MARK: Touches
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
         for touch in touches {
@@ -55,24 +56,30 @@ class GameScene: SKScene {
 
     }
    
+    //MARK: Update
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         //Set the lane number
+        
         if rampMan.position.x > frame.size.width / 1.5 {
             laneNumber = 1
         }
+        
         if rampMan.position.x < frame.size.width / 1.5 && rampMan.position.x < frame.size.width/3 {
             laneNumber = 2
         }
+        
         if rampMan.position.x < frame.size.width / 3 {
             laneNumber = 3
         }
+       
         //Add Buildings
-        addBuilding(2, hasRamp: false)
+        addBuilding(false)
         moveBuilding()
         
     }
     
+    //MARK: Man funcs
     func addMan (position: CGPoint) {
         // returns a new man
         rampMan = RampMan(position: position)
@@ -91,34 +98,44 @@ class GameScene: SKScene {
         case 1:
             rampMoveEnded()
             rampMan.zRotation = 0
+            
             let rotate = SKAction.rotateByAngle(-0.5, duration: 0.1)
             let endRotation = SKAction.rotateByAngle(0.5, duration: 0.1)
             let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.3))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
+       
         case 2:
             rampMoveEnded()
             var rotate = SKAction()
             var endRotation = SKAction()
             rampMan.zRotation = 0
+           
             if rampManMoveRight {
                 rotate = SKAction.rotateByAngle(0.5, duration: 0.1)
                 endRotation = SKAction.rotateByAngle(-0.5, duration: 0.1)
             }
+            
             if !rampManMoveRight {
                 rotate = SKAction.rotateByAngle(-0.5, duration: 0.1)
                 endRotation = SKAction.rotateByAngle(0.5, duration: 0.1)
             }
+           
             let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/2, rampMan.position.y), duration: 0.3))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
+      
         case 3:
             let rotate = SKAction.rotateByAngle(0.5, duration: 0.1)
             let endRotation = SKAction.rotateByAngle(-0.5, duration: 0.1)
+            
             rampMoveEnded()
+            
             rampMan.zRotation = 0
+            
             let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.3))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
+            
             rampMan.runAction(moveAction)
 
         default:
@@ -134,8 +151,10 @@ class GameScene: SKScene {
     func addLine(endPoint: CGPoint, startPoint: CGPoint) {
         let path = CGPathCreateMutable()
         let line = SKShapeNode()
+       
         CGPathMoveToPoint(path, nil, startPoint.x, startPoint.y)
         CGPathAddLineToPoint(path,nil, endPoint.x, endPoint.y)
+       
         line.path = path
         line.fillColor = SKColor.blackColor()
         line.strokeColor = SKColor.blackColor()
@@ -143,21 +162,26 @@ class GameScene: SKScene {
         addChild(line)
     }
     
-    func addBuilding(lane: Int, hasRamp: Bool) {
+    //MARK: Building funcs
+    func addBuilding(hasRamp: Bool) {
         //Add a new building in the correct lane
+        let lane = Int((arc4random_uniform(3)))
         let building = Building(lane: lane, hasRamp: hasRamp)
+       
         print(building.xPosition)
         print(building.lane)
+       
         buildings.append(building)
+       
         switch lane {
+        case 0:
+            building.xPosition = frame.size.width / 6
         case 1:
-            building.xPosition = frame.size.width / 3.0
+            building.xPosition = frame.size.width / 2
         case 2:
-            building.xPosition = frame.size.width / 2.0
-        case 3:
-            building.xPosition = frame.size.width / 1.5
+            building.xPosition = frame.size.width / 1
         default:
-            building.xPosition = frame.size.width / 2.0
+            building.xPosition = frame.size.width / 2
         }
         building.position = CGPoint(x: building.xPosition, y: frame.size.height + 100)
         addChild(building)
