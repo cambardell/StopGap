@@ -12,15 +12,19 @@ import SpriteKit
 class Building: SKSpriteNode {
     var lane: Int
     var hasRamp: Bool
+    var xPosition: CGFloat
     init(lane: Int, hasRamp: Bool) {
         let texture = SKTexture(imageNamed: "Building")
         self.lane = lane
         self.hasRamp = hasRamp
+        self.xPosition = 384
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
+        
     }
     required init?(coder aDecoder: NSCoder) {
         self.lane = 2
-        hasRamp = false
+        self.hasRamp = false
+        self.xPosition = 384
         super.init(coder: aDecoder)
     }
 }

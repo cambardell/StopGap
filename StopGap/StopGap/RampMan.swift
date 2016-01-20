@@ -17,10 +17,13 @@ class RampMan: SKSpriteNode {
         self.laneOne = false
         self.laneTwo = true
         self.laneThree = false
-          super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
+        super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
         self.position = position
+        self.physicsBody = SKPhysicsBody(circleOfRadius: texture.size().width/2)
+        self.physicsBody!.dynamic = true
+        self.physicsBody!.friction = 0
+        self.physicsBody!.linearDamping = 0
         
-
     }
     
     required init?(coder aDecoder: NSCoder) {
