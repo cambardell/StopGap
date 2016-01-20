@@ -10,14 +10,17 @@ import UIKit
 import SpriteKit
 
 class Building: SKSpriteNode {
-    var hasRamp:Bool
-    init() {
-        self.hasRamp = false
+    var lane: Int
+    var hasRamp: Bool
+    init(lane: Int, hasRamp: Bool) {
         let texture = SKTexture(imageNamed: "Building")
+        self.lane = lane
+        self.hasRamp = hasRamp
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
     }
     required init?(coder aDecoder: NSCoder) {
-        self.hasRamp = false
+        self.lane = 2
+        hasRamp = false
         super.init(coder: aDecoder)
     }
 }
