@@ -20,6 +20,8 @@ class GameScene: SKScene {
     //building vars
     var buildings = [Building]()
     var buildingSpeed:CGFloat = 10.0
+    var timeToBuilding: CFTimeInterval = 0.3
+    var lastBuilding: CFTimeInterval = 0.0
     
     //MARK: Did move to view
     override func didMoveToView(view: SKView) {
@@ -72,9 +74,11 @@ class GameScene: SKScene {
         if rampMan.position.x < frame.size.width / 3 {
             laneNumber = 3
         }
-       
-        //Add Buildings
-        addBuilding(false)
+        if currentTime - lastBuilding > timeToBuilding {
+            addBuilding(false)
+            lastBuilding = currentTime + timeToBuilding
+        }
+        
         moveBuilding()
         
     }
@@ -96,13 +100,13 @@ class GameScene: SKScene {
         }))
         switch lane {
         case 1:
+            let rotate = SKAction.rotateByAngle(-0.5, duration: 0.05)
+            let endRotation = SKAction.rotateByAngle(0.5, duration: 0.05)
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.2))
+            let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
+            
             rampMoveEnded()
             rampMan.zRotation = 0
-            
-            let rotate = SKAction.rotateByAngle(-0.5, duration: 0.1)
-            let endRotation = SKAction.rotateByAngle(0.5, duration: 0.1)
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.3))
-            let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
        
         case 2:
@@ -112,30 +116,27 @@ class GameScene: SKScene {
             rampMan.zRotation = 0
            
             if rampManMoveRight {
-                rotate = SKAction.rotateByAngle(0.5, duration: 0.1)
-                endRotation = SKAction.rotateByAngle(-0.5, duration: 0.1)
+                rotate = SKAction.rotateByAngle(0.5, duration: 0.05)
+                endRotation = SKAction.rotateByAngle(-0.5, duration: 0.05)
             }
             
             if !rampManMoveRight {
-                rotate = SKAction.rotateByAngle(-0.5, duration: 0.1)
-                endRotation = SKAction.rotateByAngle(0.5, duration: 0.1)
+                rotate = SKAction.rotateByAngle(-0.5, duration: 0.05)
+                endRotation = SKAction.rotateByAngle(0.5, duration: 0.05)
             }
            
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/2, rampMan.position.y), duration: 0.3))
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/2, rampMan.position.y), duration: 0.2))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
       
         case 3:
-            let rotate = SKAction.rotateByAngle(0.5, duration: 0.1)
-            let endRotation = SKAction.rotateByAngle(-0.5, duration: 0.1)
-            
-            rampMoveEnded()
-            
-            rampMan.zRotation = 0
-            
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.3))
+            let rotate = SKAction.rotateByAngle(0.5, duration: 0.05)
+            let endRotation = SKAction.rotateByAngle(-0.5, duration: 0.05)
+            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.2))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
-            
+
+            rampMoveEnded()
+            rampMan.zRotation = 0
             rampMan.runAction(moveAction)
 
         default:
@@ -167,6 +168,7 @@ class GameScene: SKScene {
         //Add a new building in the correct lane
         let lane = Int((arc4random_uniform(3)))
         let building = Building(lane: lane, hasRamp: hasRamp)
+        
        
         print(building.xPosition)
         print(building.lane)
@@ -179,7 +181,7 @@ class GameScene: SKScene {
         case 1:
             building.xPosition = frame.size.width / 2
         case 2:
-            building.xPosition = frame.size.width / 1
+            building.xPosition = frame.size.width / 1.2
         default:
             building.xPosition = frame.size.width / 2
         }
