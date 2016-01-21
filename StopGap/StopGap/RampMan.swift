@@ -13,7 +13,6 @@ class RampMan: SKSpriteNode {
     var laneOne:Bool
     var laneTwo:Bool
     var laneThree:Bool
-    
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "RampMan")
         self.laneOne = false
@@ -23,8 +22,6 @@ class RampMan: SKSpriteNode {
         self.position = position
         self.physicsBody = SKPhysicsBody(circleOfRadius: texture.size().width/2)
         self.physicsBody!.dynamic = true
-        self.physicsBody!.friction = 0
-        self.physicsBody!.linearDamping = 0
         
     }
     

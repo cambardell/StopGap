@@ -14,6 +14,7 @@ class Building: SKSpriteNode {
     var lane: Int
     var hasRamp: Bool
     var xPosition: CGFloat
+    
     init(lane: Int, hasRamp: Bool) {
         let texture = SKTexture(imageNamed: "Building")
         self.lane = lane

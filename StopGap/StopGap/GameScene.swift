@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     //ramp man vars
     var rampMan = SKSpriteNode()
     var rampManMoveRight = false
@@ -21,9 +21,15 @@ class GameScene: SKScene {
     var buildingSpeed:CGFloat = 10.0
     var timeToBuilding: CFTimeInterval = 1.0
     var lastBuilding: CFTimeInterval = 0.0
+    var buildingDuration = 5.0
     
     //Ramp vars
     var ramps = [Ramp]()
+    
+    //Collision vars
+    var rampCollision = 0x1 << 1
+    var rampManCollision = 0x1 << 2
+    
     
     //MARK: Did move to view
     override func didMoveToView(view: SKView) {
@@ -31,6 +37,7 @@ class GameScene: SKScene {
         addMan(CGPointMake(frame.size.width / 2, frame.size.height / 9))
         addLine(CGPoint(x: frame.size.width / 1.5, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/1.5, y: 0))
         addLine(CGPoint(x: frame.size.width / 3, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/3, y: 0))
+        self.physicsWorld.contactDelegate = self
     }
     
     //MARK: Touches
@@ -101,6 +108,12 @@ class GameScene: SKScene {
         rampMan = RampMan(position: position)
         rampMan.size.width = frame.size.width/8
         rampMan.size.height = frame.size.width/8
+        rampMan.physicsBody = SKPhysicsBody(rectangleOfSize: rampMan.size)
+        rampMan.physicsBody?.categoryBitMask = UInt32(rampManCollision)
+        rampMan.physicsBody?.dynamic = true
+        rampMan.physicsBody?.contactTestBitMask = UInt32(rampCollision)
+        rampMan.physicsBody?.collisionBitMask = 0
+        rampMan.physicsBody?.usesPreciseCollisionDetection = true
         self.addChild(rampMan)
 
     }
@@ -203,7 +216,7 @@ class GameScene: SKScene {
             addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)))
         }
         //Move the building
-        let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, frame.size.height - frame.size.height-100), duration: 5))
+        let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, frame.size.height - frame.size.height-100), duration: buildingDuration))
         let stopBuilding = (SKAction.runBlock({
             self.buildingMoveEnded(building)
         }))
@@ -221,17 +234,46 @@ class GameScene: SKScene {
         let ramp = Ramp()
         ramp.position = position
         ramp.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
+        ramp.physicsBody = SKPhysicsBody(rectangleOfSize: ramp.size)
+        ramp.physicsBody?.categoryBitMask = UInt32(rampCollision)
+        ramp.physicsBody?.dynamic = true
+        ramp.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
+        ramp.physicsBody?.collisionBitMask = 0
+        ramp.physicsBody?.usesPreciseCollisionDetection = true
+
         addChild(ramp)
         ramps.append(ramp)
-        let moveRamp = (SKAction.moveTo(CGPointMake(position.x, frame.size.height - frame.size.height - 50 - frame.size.height / 10), duration: 5))
+        let moveRamp = (SKAction.moveTo(CGPointMake(position.x, frame.size.height - frame.size.height - 50 - frame.size.height / 10), duration: buildingDuration))
         let stopRamp = (SKAction.runBlock({
             self.rampMoveEnded(ramp)
         }))
         let moveAction = SKAction.sequence([moveRamp, stopRamp])
         ramp.runAction(moveAction)
     }
+    
     func rampMoveEnded(ramp: Ramp){
         ramp.removeFromParent()
         ramps.removeAtIndex(0)
+    }
+    
+    //Called when physics bodies intersect
+    func didBeginContact(contact: SKPhysicsContact){
+        print("began contact")
+        var firstBody = SKPhysicsBody()
+        var secondBody = SKPhysicsBody()
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        if (firstBody.categoryBitMask & UInt32(rampCollision)) != 0 && (secondBody.categoryBitMask & UInt32(rampManCollision)) != 0 {
+            enterBuilding(firstBody.node as! SKSpriteNode, man: secondBody.node as! SKSpriteNode)
+        }
+    }
+    
+    func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
+        print("entered building")
     }
 }
