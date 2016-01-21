@@ -9,7 +9,6 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    
     //ramp man vars
     var rampMan = SKSpriteNode()
     var rampManMoveRight = false
@@ -20,7 +19,7 @@ class GameScene: SKScene {
     //building vars
     var buildings = [Building]()
     var buildingSpeed:CGFloat = 10.0
-    var timeToBuilding: CFTimeInterval = 0.3
+    var timeToBuilding: CFTimeInterval = 1.0
     var lastBuilding: CFTimeInterval = 0.0
     
     //Ramp vars
@@ -80,7 +79,17 @@ class GameScene: SKScene {
             laneNumber = 3
         }
         if currentTime - lastBuilding > timeToBuilding {
-            addBuilding(false)
+            let nish = Int((arc4random_uniform(2)))
+            print(nish)
+            switch nish {
+            case 0:
+                addBuilding(false)
+            case 1:
+                addBuilding(true)
+            default:
+                addBuilding(true)
+            }
+            
             lastBuilding = currentTime + timeToBuilding
         }
         
@@ -99,7 +108,7 @@ class GameScene: SKScene {
     //Move the ramp man. Takes the correct lane as a parameter. 
     func moveMan(lane: Int) {
         let stopRampMan = (SKAction.runBlock({
-            self.rampMoveEnded()
+            self.rampManMoveEnded()
         }))
         //Moves man to the appropriate lane with the correct rotation
         switch lane {
@@ -109,12 +118,12 @@ class GameScene: SKScene {
             let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.2))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             
-            rampMoveEnded()
+            rampManMoveEnded()
             rampMan.zRotation = 0
             rampMan.runAction(moveAction)
        
         case 2:
-            rampMoveEnded()
+            rampManMoveEnded()
             var rotate = SKAction()
             var endRotation = SKAction()
             rampMan.zRotation = 0
@@ -139,7 +148,7 @@ class GameScene: SKScene {
             let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.2))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
 
-            rampMoveEnded()
+            rampManMoveEnded()
             rampMan.zRotation = 0
             rampMan.runAction(moveAction)
 
@@ -149,7 +158,7 @@ class GameScene: SKScene {
         
     }
     //Ends all of the ramp man's movements
-    func rampMoveEnded() {
+    func rampManMoveEnded() {
         rampMan.removeAllActions()
     }
     
@@ -188,9 +197,11 @@ class GameScene: SKScene {
             building.xPosition = frame.size.width / 2
         }
         building.position = CGPoint(x: building.xPosition, y: frame.size.height + 100)
-        building.size = CGSize(width: frame.size.height / 18, height: frame.size.height / 18)
+        building.size = CGSize(width: frame.size.height / 10, height: frame.size.height / 10)
         addChild(building)
-        addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height)))
+        if hasRamp {
+            addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)))
+        }
         //Move the building
         let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, frame.size.height - frame.size.height-100), duration: 5))
         let stopBuilding = (SKAction.runBlock({
@@ -203,7 +214,6 @@ class GameScene: SKScene {
     func buildingMoveEnded(building: Building) {
         building.removeFromParent()
         buildings.removeAtIndex(0)
-        print(buildings.count)
     }
     
     //MARK: Ramp funcs
@@ -213,9 +223,9 @@ class GameScene: SKScene {
         ramp.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
         addChild(ramp)
         ramps.append(ramp)
-        let moveRamp = (SKAction.moveTo(CGPointMake(position.x, frame.size.height - frame.size.height - 100 - ramp.size.height), duration: 5))
+        let moveRamp = (SKAction.moveTo(CGPointMake(position.x, frame.size.height - frame.size.height - 50 - frame.size.height / 10), duration: 5))
         let stopRamp = (SKAction.runBlock({
-            self.rampMoveEnded()
+            self.rampMoveEnded(ramp)
         }))
         let moveAction = SKAction.sequence([moveRamp, stopRamp])
         ramp.runAction(moveAction)
