@@ -9,9 +9,11 @@
 import SpriteKit
 
 class RampMan: SKSpriteNode {
+    //Lane vars
     var laneOne:Bool
     var laneTwo:Bool
     var laneThree:Bool
+    
     init(position: CGPoint) {
         let texture = SKTexture(imageNamed: "RampMan")
         self.laneOne = false

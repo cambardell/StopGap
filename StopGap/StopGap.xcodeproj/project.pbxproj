@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A7A09801C4FD42100B9BFF2 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A097F1C4FD42100B9BFF2 /* Building.swift */; };
+		1A7CC8C11C5088C500529D44 /* Ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7CC8C01C5088C500529D44 /* Ramp.swift */; };
 		1A9913421C48648300C20FC8 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 1A9913411C48648300C20FC8 /* Assets */; };
 		1AA543AE1C484C9D00024CAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA543AD1C484C9D00024CAE /* AppDelegate.swift */; };
 		1AA543B01C484C9D00024CAE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1AA543AF1C484C9D00024CAE /* GameScene.sks */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		1A7A097F1C4FD42100B9BFF2 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
+		1A7CC8C01C5088C500529D44 /* Ramp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ramp.swift; sourceTree = "<group>"; };
 		1A9913411C48648300C20FC8 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = StopGap/Assets; sourceTree = "<group>"; };
 		1AA543AA1C484C9D00024CAE /* StopGap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StopGap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AA543AD1C484C9D00024CAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				1AA543AD1C484C9D00024CAE /* AppDelegate.swift */,
 				1AA543AF1C484C9D00024CAE /* GameScene.sks */,
 				1AA543B11C484C9D00024CAE /* GameScene.swift */,
+				1A7CC8C01C5088C500529D44 /* Ramp.swift */,
 				1A7A097F1C4FD42100B9BFF2 /* Building.swift */,
 				1AA543DF1C4863B900024CAE /* RampMan.swift */,
 				1AA543B31C484C9D00024CAE /* GameViewController.swift */,
@@ -276,6 +279,7 @@
 				1AA543E01C4863B900024CAE /* RampMan.swift in Sources */,
 				1AA543B21C484C9D00024CAE /* GameScene.swift in Sources */,
 				1A7A09801C4FD42100B9BFF2 /* Building.swift in Sources */,
+				1A7CC8C11C5088C500529D44 /* Ramp.swift in Sources */,
 				1AA543B41C484C9D00024CAE /* GameViewController.swift in Sources */,
 				1AA543AE1C484C9D00024CAE /* AppDelegate.swift in Sources */,
 			);

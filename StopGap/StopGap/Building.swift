@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 
 class Building: SKSpriteNode {
+    //Lane, ramp, and xPosition vars
     var lane: Int
     var hasRamp: Bool
     var xPosition: CGFloat
@@ -19,7 +20,6 @@ class Building: SKSpriteNode {
         self.hasRamp = hasRamp
         self.xPosition = 384
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
-        
     }
     required init?(coder aDecoder: NSCoder) {
         self.lane = 2
