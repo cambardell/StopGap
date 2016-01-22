@@ -30,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Collision vars
     var rampCollision = 0x1 << 1
     var rampManCollision = 0x1 << 2
+    var stairCollision = 0x1 << 3
     
     
     //MARK: Did move to view
@@ -41,45 +42,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
     }
     
-    //MARK: Touches
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       /* Called when a touch begins */
-        for touch in touches {
-            let touchposition = touch.locationInNode(self)
-            //Call the move function with the correct lane as the parameter.
-            //When moving to the middle, specify if it is moving from the left side or right side.
-            if touchposition.x > frame.size.width / 1.5 {
-                rampManMoveRight = true
-                moveMan(1)
-            }
-            if touchposition.x < frame.size.width / 1.5 && touchposition.x > frame.size.width / 3 {
-                moveMan(2)
-                
-                if laneNumber == 1 {
-                    rampManMoveRight = true
-                }
-                if laneNumber == 3 {
-                    rampManMoveRight = false
-                }
-            }
-            if touchposition.x < frame.size.width/3 {
-                moveMan(3)
-                rampManMoveRight = false
-            }
-        }
-
-    }
-   
     //MARK: Update
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         //Set the lane number
-        
+        print(laneNumber)
         if rampMan.position.x > frame.size.width / 1.5 {
             laneNumber = 1
         }
         
-        if rampMan.position.x < frame.size.width / 1.5 && rampMan.position.x < frame.size.width/3 {
+        if rampMan.position.x < frame.size.width / 1.5 && rampMan.position.x > frame.size.width/3 {
             laneNumber = 2
         }
         
@@ -102,6 +74,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    //MARK: Touches
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+       /* Called when a touch begins */
+        for touch in touches {
+            let touchposition = touch.locationInNode(self)
+            //Call the move function with the correct lane as the parameter.
+            //When moving to the middle, specify if it is moving from the left side or right side.
+            if touchposition.x > frame.size.width / 1.5 {
+                rampManMoveRight = true
+                moveMan(1)
+            }
+            if touchposition.x < frame.size.width / 1.5 && touchposition.x > frame.size.width / 3 && laneNumber != 2{
+                moveMan(2)
+                
+                if laneNumber == 1 {
+                    rampManMoveRight = true
+                }
+                if laneNumber == 3 {
+                    rampManMoveRight = false
+                }
+            }
+            if touchposition.x < frame.size.width/3 {
+                moveMan(3)
+                rampManMoveRight = false
+            }
+        }
+
+    }
+   
     //MARK: Man funcs
     func addMan (position: CGPoint) {
         //Returns a new man. Takes position as a parameter.
@@ -119,7 +120,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Move the ramp man. Takes the correct lane as a parameter. 
     func moveMan(lane: Int) {
-        print(startingLane)
         let stopRampMan = (SKAction.runBlock({
             self.rampManMoveEnded()
         }))
@@ -233,6 +233,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if hasRamp {
             addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building)
         }
+        else {
+            building.physicsBody = SKPhysicsBody(rectangleOfSize: rampMan.size)
+            building.physicsBody?.categoryBitMask = UInt32(stairCollision)
+            building.physicsBody?.dynamic = true
+            building.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
+            building.physicsBody?.collisionBitMask = 0
+            building.physicsBody?.usesPreciseCollisionDetection = true
+        }
         //Move the building
         let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, -100), duration: buildingDuration))
         let stopBuilding = (SKAction.runBlock({
@@ -288,8 +296,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (firstBody.categoryBitMask & UInt32(rampCollision)) != 0 && (secondBody.categoryBitMask & UInt32(rampManCollision)) != 0 {
             enterBuilding(firstBody.node as! SKSpriteNode, man: secondBody.node as! SKSpriteNode)
         }
+        if (firstBody.categoryBitMask & UInt32(rampManCollision)) != 0 && (secondBody.categoryBitMask & UInt32(stairCollision)) != 0 {
+            hitStairs(firstBody.node as! SKSpriteNode, stairs: secondBody.node as! SKSpriteNode)
+        }
     }
     
+    //Called when the ramp man hits a ramp
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
+        
+    }
+    
+    //Called when the ramp man hits stairs
+    func hitStairs(man: SKSpriteNode, stairs: SKSpriteNode){
+
     }
 }
