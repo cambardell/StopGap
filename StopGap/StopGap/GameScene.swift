@@ -12,6 +12,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //ramp man vars
     var rampMan = SKSpriteNode()
     var rampManMoveRight = false
+    var startingLane = 2
     
     //lane vars
     var laneNumber = 2
@@ -19,7 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //building vars
     var buildings = [Building]()
     var buildingSpeed:CGFloat = 10.0
-    var timeToBuilding: CFTimeInterval = 1.0
+    var timeToBuilding: CFTimeInterval = 0.5
     var lastBuilding: CFTimeInterval = 0.0
     var buildingDuration = 5.0
     
@@ -86,9 +87,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             laneNumber = 3
         }
         if currentTime - lastBuilding > timeToBuilding {
-            let nish = Int((arc4random_uniform(2)))
-            print(nish)
-            switch nish {
+            let random = Int((arc4random_uniform(2)))
+            switch random {
             case 0:
                 addBuilding(false)
             case 1:
@@ -114,12 +114,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         rampMan.physicsBody?.contactTestBitMask = UInt32(rampCollision)
         rampMan.physicsBody?.collisionBitMask = 0
         rampMan.physicsBody?.usesPreciseCollisionDetection = true
-        self.addChild(rampMan)
-
+        self.addChild(rampMan) 
     }
     
     //Move the ramp man. Takes the correct lane as a parameter. 
     func moveMan(lane: Int) {
+        print(startingLane)
         let stopRampMan = (SKAction.runBlock({
             self.rampManMoveEnded()
         }))
@@ -128,12 +128,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 1:
             let rotate = SKAction.rotateByAngle(-0.5, duration: 0.05)
             let endRotation = SKAction.rotateByAngle(0.5, duration: 0.05)
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.2))
+            var moveRampMan = SKAction()
+            //If statement changes duration based on how far the man has to travel
+            if startingLane == 1 {
+                moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.4))
+            }
+            if startingLane == 2 {
+                moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/1.2, rampMan.position.y), duration: 0.2))
+            }
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             
             rampManMoveEnded()
             rampMan.zRotation = 0
             rampMan.runAction(moveAction)
+            startingLane = 3
        
         case 2:
             rampManMoveEnded()
@@ -154,16 +162,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/2, rampMan.position.y), duration: 0.2))
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
             rampMan.runAction(moveAction)
+            startingLane = 2
       
         case 3:
             let rotate = SKAction.rotateByAngle(0.5, duration: 0.05)
             let endRotation = SKAction.rotateByAngle(-0.5, duration: 0.05)
-            let moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.2))
+            var moveRampMan = SKAction()
+            //If statement changes duration based on how far the man has to travel
+            if startingLane == 3 {
+                moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.4))
+            }
+            if startingLane == 2 {
+                moveRampMan = (SKAction.moveTo(CGPointMake(frame.size.width/6, rampMan.position.y), duration: 0.2))
+            }
+            
             let moveAction = (SKAction.sequence([rotate, moveRampMan, endRotation, stopRampMan]))
 
             rampManMoveEnded()
             rampMan.zRotation = 0
             rampMan.runAction(moveAction)
+            startingLane = 1
 
         default:
              break
@@ -213,10 +231,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         building.size = CGSize(width: frame.size.height / 10, height: frame.size.height / 10)
         addChild(building)
         if hasRamp {
-            addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)))
+            addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building)
         }
         //Move the building
-        let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, frame.size.height - frame.size.height-100), duration: buildingDuration))
+        let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, -100), duration: buildingDuration))
         let stopBuilding = (SKAction.runBlock({
             self.buildingMoveEnded(building)
         }))
@@ -230,7 +248,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: Ramp funcs
-    func addRamp(position: CGPoint) {
+    func addRamp(position: CGPoint, building: SKSpriteNode) {
         let ramp = Ramp()
         ramp.position = position
         ramp.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
@@ -243,7 +261,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         addChild(ramp)
         ramps.append(ramp)
-        let moveRamp = (SKAction.moveTo(CGPointMake(position.x, frame.size.height - frame.size.height - 50 - frame.size.height / 10), duration: buildingDuration))
+        let moveRamp = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: buildingDuration))
         let stopRamp = (SKAction.runBlock({
             self.rampMoveEnded(ramp)
         }))
@@ -258,7 +276,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Called when physics bodies intersect
     func didBeginContact(contact: SKPhysicsContact){
-        print("began contact")
         var firstBody = SKPhysicsBody()
         var secondBody = SKPhysicsBody()
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -274,6 +291,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
-        print("entered building")
     }
 }
