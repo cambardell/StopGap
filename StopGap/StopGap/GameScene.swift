@@ -251,6 +251,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         building.runAction(moveAction)
     }
     
+    //Stops all the buildings move actions
     func buildingMoveEnded(building: Building) {
         building.removeFromParent()
         buildings.removeAtIndex(0)
@@ -270,6 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         addChild(ramp)
         ramps.append(ramp)
+        //Actions that animate the ramp
         let moveRamp = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: buildingDuration))
         let stopRamp = (SKAction.runBlock({
             self.rampMoveEnded(ramp)
@@ -278,6 +280,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ramp.runAction(moveAction)
     }
     
+    //Remove the ramp from the scene
     func rampMoveEnded(ramp: Ramp){
         ramp.removeFromParent()
         ramps.removeAtIndex(0)
@@ -302,7 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    //Called when the ramp man hits a ramp
+    //Called when the ramp man hits a ramp.
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
         
     }
