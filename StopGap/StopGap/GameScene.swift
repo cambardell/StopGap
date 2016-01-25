@@ -81,7 +81,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let touchposition = touch.locationInNode(self)
             //Call the move function with the correct lane as the parameter.
             //When moving to the middle, specify if it is moving from the left side or right side.
-            if touchposition.x > frame.size.width / 1.5 {
+            if touchposition.x > frame.size.width / 1.5 && laneNumber != 1 {
                 rampManMoveRight = true
                 moveMan(1)
             }
@@ -95,7 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     rampManMoveRight = false
                 }
             }
-            if touchposition.x < frame.size.width/3 {
+            if touchposition.x < frame.size.width/3 && laneNumber != 3 {
                 moveMan(3)
                 rampManMoveRight = false
             }
@@ -230,6 +230,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         building.position = CGPoint(x: building.xPosition, y: frame.size.height + 100)
         building.size = CGSize(width: frame.size.height / 10, height: frame.size.height / 10)
         addChild(building)
+        //If the building has a ramp, it has no physics body
         if hasRamp {
             addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building)
         }
