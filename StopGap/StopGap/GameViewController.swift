@@ -14,7 +14,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let skView = self.view as! SKView
-        if let myScene = GameScene(fileNamed: "GameScene") {
+        if let myScene = MainMenu(fileNamed: "MainMenu") {
             skView.showsNodeCount = true
             skView.presentScene(myScene)
         }
