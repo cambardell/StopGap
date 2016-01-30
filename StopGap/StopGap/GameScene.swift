@@ -27,6 +27,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Ramp vars
     var ramps = [Ramp]()
     
+    //Stair vars
+    var stairList = [Stairs]()
+    
     //Collision vars
     var rampCollision = 0x1 << 1
     var rampManCollision = 0x1 << 2
@@ -46,7 +49,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         //Set the lane number
-        print(laneNumber)
         if rampMan.position.x > frame.size.width / 1.5 {
             laneNumber = 1
         }
@@ -235,12 +237,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building)
         }
         else {
-            building.physicsBody = SKPhysicsBody(rectangleOfSize: rampMan.size)
-            building.physicsBody?.categoryBitMask = UInt32(stairCollision)
-            building.physicsBody?.dynamic = true
-            building.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
-            building.physicsBody?.collisionBitMask = 0
-            building.physicsBody?.usesPreciseCollisionDetection = true
+            addStairs(CGPoint(x: building.position.x, y: building.position.y - (building.size.height / 2)), building: building)
         }
         //Move the building
         let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, -100), duration: buildingDuration))
@@ -286,6 +283,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ramps.removeAtIndex(0)
     }
     
+    func addStairs(position: CGPoint, building: SKSpriteNode) {
+        let stairs = Stairs()
+        stairs.position = position
+        stairs.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
+        stairs.physicsBody = SKPhysicsBody(rectangleOfSize: stairs.size)
+        stairs.physicsBody?.categoryBitMask = UInt32(stairCollision)
+        stairs.physicsBody?.dynamic = true
+        stairs.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
+        stairs.physicsBody?.collisionBitMask = 0
+        stairs.physicsBody?.usesPreciseCollisionDetection = true
+        addChild(stairs)
+        stairList.append(stairs)
+        //Actions that animate the stairs
+        let movestairs = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: buildingDuration))
+        let stopstairs = (SKAction.runBlock({
+            self.stairsMoveEnded(stairs)
+        }))
+        let moveAction = SKAction.sequence([movestairs, stopstairs])
+        stairs.runAction(moveAction)
+    }
+    
+    func stairsMoveEnded(stairs: Stairs){
+        stairList.removeAtIndex(0)
+        stairs.removeFromParent()
+    }
+    
+    //MARK: Physics and collisions
     //Called when physics bodies intersect
     func didBeginContact(contact: SKPhysicsContact){
         var firstBody = SKPhysicsBody()
@@ -307,11 +331,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Called when the ramp man hits a ramp.
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
-        
+        print("building")
     }
     
     //Called when the ramp man hits stairs
     func hitStairs(man: SKSpriteNode, stairs: SKSpriteNode){
-
+        print("stairs")
     }
 }
