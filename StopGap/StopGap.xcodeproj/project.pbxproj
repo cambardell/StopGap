@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A2FBC941C56A10F00910F5E /* Stairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2FBC931C56A10F00910F5E /* Stairs.swift */; };
-		1A3D193E1C57F7BF00B6E789 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A3D193D1C57F7BF00B6E789 /* MainMenu.sks */; };
+		1A4BF7931C5C589900386B89 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7921C5C589900386B89 /* MainMenu.sks */; };
 		1A7A09801C4FD42100B9BFF2 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A097F1C4FD42100B9BFF2 /* Building.swift */; };
 		1A7CC8C11C5088C500529D44 /* Ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7CC8C01C5088C500529D44 /* Ramp.swift */; };
 		1A9913421C48648300C20FC8 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 1A9913411C48648300C20FC8 /* Assets */; };
@@ -44,7 +44,7 @@
 
 /* Begin PBXFileReference section */
 		1A2FBC931C56A10F00910F5E /* Stairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stairs.swift; sourceTree = "<group>"; };
-		1A3D193D1C57F7BF00B6E789 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = MainMenu.sks; path = ../MainMenu.sks; sourceTree = "<group>"; };
+		1A4BF7921C5C589900386B89 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		1A7A097F1C4FD42100B9BFF2 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		1A7CC8C01C5088C500529D44 /* Ramp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ramp.swift; sourceTree = "<group>"; };
 		1A9913411C48648300C20FC8 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = StopGap/Assets; sourceTree = "<group>"; };
@@ -117,14 +117,14 @@
 			isa = PBXGroup;
 			children = (
 				1AA543AD1C484C9D00024CAE /* AppDelegate.swift */,
-				1AA543AF1C484C9D00024CAE /* GameScene.sks */,
 				1AA543B11C484C9D00024CAE /* GameScene.swift */,
-				1A2FBC931C56A10F00910F5E /* Stairs.swift */,
-				1A7CC8C01C5088C500529D44 /* Ramp.swift */,
+				1AA543AF1C484C9D00024CAE /* GameScene.sks */,
 				1ACDF38B1C57F66300A5662D /* MainMenu.swift */,
-				1A3D193D1C57F7BF00B6E789 /* MainMenu.sks */,
-				1A7A097F1C4FD42100B9BFF2 /* Building.swift */,
+				1A4BF7921C5C589900386B89 /* MainMenu.sks */,
 				1AA543DF1C4863B900024CAE /* RampMan.swift */,
+				1A7A097F1C4FD42100B9BFF2 /* Building.swift */,
+				1A7CC8C01C5088C500529D44 /* Ramp.swift */,
+				1A2FBC931C56A10F00910F5E /* Stairs.swift */,
 				1AA543B31C484C9D00024CAE /* GameViewController.swift */,
 				1AA543B51C484C9D00024CAE /* Main.storyboard */,
 				1AA543B81C484C9D00024CAE /* Assets.xcassets */,
@@ -257,7 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A9913421C48648300C20FC8 /* Assets in Resources */,
-				1A3D193E1C57F7BF00B6E789 /* MainMenu.sks in Resources */,
+				1A4BF7931C5C589900386B89 /* MainMenu.sks in Resources */,
 				1AA543B01C484C9D00024CAE /* GameScene.sks in Resources */,
 				1AA543BC1C484C9D00024CAE /* LaunchScreen.storyboard in Resources */,
 				1AA543B91C484C9D00024CAE /* Assets.xcassets in Resources */,
@@ -439,7 +439,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bardell.StopGap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -451,7 +451,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bardell.StopGap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
