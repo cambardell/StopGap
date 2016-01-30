@@ -11,7 +11,7 @@ import SpriteKit
 class MainMenu: SKScene {
     var playButton = SKNode()
     override func update(currentTime: NSTimeInterval) {
-        playButton = self.childNodeWithName(("playButton"))!
+        playButton = self.childNodeWithName(("playButton"))! 
         playButton.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

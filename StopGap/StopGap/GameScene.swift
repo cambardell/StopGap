@@ -20,7 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //building vars
     var buildings = [Building]()
     var buildingSpeed:CGFloat = 10.0
-    var timeToBuilding: CFTimeInterval = 0.5
+    var timeToBuilding: CFTimeInterval = 0.7
     var lastBuilding: CFTimeInterval = 0.0
     var buildingDuration = 5.0
     
