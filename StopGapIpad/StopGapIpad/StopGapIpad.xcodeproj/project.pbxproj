@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A3C28901C5C59E000D0A52A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28861C5C59E000D0A52A /* AppDelegate.swift */; };
-		1A3C28911C5C59E000D0A52A /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28871C5C59E000D0A52A /* Building.swift */; };
 		1A3C28921C5C59E000D0A52A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A3C28881C5C59E000D0A52A /* GameScene.sks */; };
-		1A3C28931C5C59E000D0A52A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28891C5C59E000D0A52A /* GameScene.swift */; };
-		1A3C28941C5C59E000D0A52A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C288A1C5C59E000D0A52A /* GameViewController.swift */; };
 		1A3C28951C5C59E000D0A52A /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A3C288B1C5C59E000D0A52A /* MainMenu.sks */; };
-		1A3C28961C5C59E000D0A52A /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C288C1C5C59E000D0A52A /* MainMenu.swift */; };
-		1A3C28971C5C59E000D0A52A /* Ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C288D1C5C59E000D0A52A /* Ramp.swift */; };
-		1A3C28981C5C59E000D0A52A /* RampMan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C288E1C5C59E000D0A52A /* RampMan.swift */; };
-		1A3C28991C5C59E000D0A52A /* Stairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C288F1C5C59E000D0A52A /* Stairs.swift */; };
 		1A3C289B1C5C5A4F00D0A52A /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 1A3C289A1C5C5A4F00D0A52A /* Assets */; };
+		1A3C28A61C5C5E1100D0A52A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C289E1C5C5E1100D0A52A /* AppDelegate.swift */; };
+		1A3C28A71C5C5E1100D0A52A /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C289F1C5C5E1100D0A52A /* Building.swift */; };
+		1A3C28A81C5C5E1100D0A52A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28A01C5C5E1100D0A52A /* GameScene.swift */; };
+		1A3C28A91C5C5E1100D0A52A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28A11C5C5E1100D0A52A /* GameViewController.swift */; };
+		1A3C28AA1C5C5E1100D0A52A /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28A21C5C5E1100D0A52A /* MainMenu.swift */; };
+		1A3C28AB1C5C5E1100D0A52A /* Ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28A31C5C5E1100D0A52A /* Ramp.swift */; };
+		1A3C28AD1C5C5E1100D0A52A /* Stairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28A51C5C5E1100D0A52A /* Stairs.swift */; };
+		1A3C28B01C5C5E9B00D0A52A /* RampMan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28AF1C5C5E9B00D0A52A /* RampMan.swift */; };
 		1A4BF7E81C5C596F00386B89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7E61C5C596F00386B89 /* Main.storyboard */; };
 		1A4BF7EA1C5C596F00386B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7E91C5C596F00386B89 /* Assets.xcassets */; };
 		1A4BF7ED1C5C596F00386B89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7EB1C5C596F00386B89 /* LaunchScreen.storyboard */; };
@@ -43,18 +43,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1A3C28851C5C59DF00D0A52A /* StopGapIpad-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StopGapIpad-Bridging-Header.h"; sourceTree = "<group>"; };
-		1A3C28861C5C59E000D0A52A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1A3C28871C5C59E000D0A52A /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		1A3C28881C5C59E000D0A52A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		1A3C28891C5C59E000D0A52A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		1A3C288A1C5C59E000D0A52A /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		1A3C288B1C5C59E000D0A52A /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
-		1A3C288C1C5C59E000D0A52A /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
-		1A3C288D1C5C59E000D0A52A /* Ramp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ramp.swift; sourceTree = "<group>"; };
-		1A3C288E1C5C59E000D0A52A /* RampMan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RampMan.swift; sourceTree = "<group>"; };
-		1A3C288F1C5C59E000D0A52A /* Stairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stairs.swift; sourceTree = "<group>"; };
 		1A3C289A1C5C5A4F00D0A52A /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = StopGapIpad/Assets; sourceTree = "<group>"; };
+		1A3C289E1C5C5E1100D0A52A /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../../StopGap/StopGap/AppDelegate.swift; sourceTree = "<group>"; };
+		1A3C289F1C5C5E1100D0A52A /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Building.swift; path = ../../../StopGap/StopGap/Building.swift; sourceTree = "<group>"; };
+		1A3C28A01C5C5E1100D0A52A /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = ../../../StopGap/StopGap/GameScene.swift; sourceTree = "<group>"; };
+		1A3C28A11C5C5E1100D0A52A /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameViewController.swift; path = ../../../StopGap/StopGap/GameViewController.swift; sourceTree = "<group>"; };
+		1A3C28A21C5C5E1100D0A52A /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainMenu.swift; path = ../../../StopGap/StopGap/MainMenu.swift; sourceTree = "<group>"; };
+		1A3C28A31C5C5E1100D0A52A /* Ramp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ramp.swift; path = ../../../StopGap/StopGap/Ramp.swift; sourceTree = "<group>"; };
+		1A3C28A51C5C5E1100D0A52A /* Stairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stairs.swift; path = ../../../StopGap/StopGap/Stairs.swift; sourceTree = "<group>"; };
+		1A3C28AF1C5C5E9B00D0A52A /* RampMan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RampMan.swift; path = ../../../StopGap/StopGap/RampMan.swift; sourceTree = "<group>"; };
 		1A4BF7DB1C5C596F00386B89 /* StopGapIpad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StopGapIpad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A4BF7E71C5C596F00386B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1A4BF7E91C5C596F00386B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,21 +116,20 @@
 		1A4BF7DD1C5C596F00386B89 /* StopGapIpad */ = {
 			isa = PBXGroup;
 			children = (
-				1A3C28861C5C59E000D0A52A /* AppDelegate.swift */,
-				1A3C28891C5C59E000D0A52A /* GameScene.swift */,
+				1A3C28A01C5C5E1100D0A52A /* GameScene.swift */,
 				1A3C28881C5C59E000D0A52A /* GameScene.sks */,
-				1A3C288C1C5C59E000D0A52A /* MainMenu.swift */,
+				1A3C28A21C5C5E1100D0A52A /* MainMenu.swift */,
 				1A3C288B1C5C59E000D0A52A /* MainMenu.sks */,
-				1A3C288E1C5C59E000D0A52A /* RampMan.swift */,
-				1A3C28871C5C59E000D0A52A /* Building.swift */,
-				1A3C288D1C5C59E000D0A52A /* Ramp.swift */,
-				1A3C288F1C5C59E000D0A52A /* Stairs.swift */,
-				1A3C288A1C5C59E000D0A52A /* GameViewController.swift */,
+				1A3C28AF1C5C5E9B00D0A52A /* RampMan.swift */,
+				1A3C28A31C5C5E1100D0A52A /* Ramp.swift */,
+				1A3C289F1C5C5E1100D0A52A /* Building.swift */,
+				1A3C28A51C5C5E1100D0A52A /* Stairs.swift */,
+				1A3C289E1C5C5E1100D0A52A /* AppDelegate.swift */,
+				1A3C28A11C5C5E1100D0A52A /* GameViewController.swift */,
 				1A4BF7E61C5C596F00386B89 /* Main.storyboard */,
 				1A4BF7E91C5C596F00386B89 /* Assets.xcassets */,
 				1A4BF7EB1C5C596F00386B89 /* LaunchScreen.storyboard */,
 				1A4BF7EE1C5C596F00386B89 /* Info.plist */,
-				1A3C28851C5C59DF00D0A52A /* StopGapIpad-Bridging-Header.h */,
 			);
 			path = StopGapIpad;
 			sourceTree = "<group>";
@@ -288,14 +286,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A3C28961C5C59E000D0A52A /* MainMenu.swift in Sources */,
-				1A3C28981C5C59E000D0A52A /* RampMan.swift in Sources */,
-				1A3C28941C5C59E000D0A52A /* GameViewController.swift in Sources */,
-				1A3C28931C5C59E000D0A52A /* GameScene.swift in Sources */,
-				1A3C28971C5C59E000D0A52A /* Ramp.swift in Sources */,
-				1A3C28991C5C59E000D0A52A /* Stairs.swift in Sources */,
-				1A3C28901C5C59E000D0A52A /* AppDelegate.swift in Sources */,
-				1A3C28911C5C59E000D0A52A /* Building.swift in Sources */,
+				1A3C28A91C5C5E1100D0A52A /* GameViewController.swift in Sources */,
+				1A3C28AD1C5C5E1100D0A52A /* Stairs.swift in Sources */,
+				1A3C28AA1C5C5E1100D0A52A /* MainMenu.swift in Sources */,
+				1A3C28A61C5C5E1100D0A52A /* AppDelegate.swift in Sources */,
+				1A3C28B01C5C5E9B00D0A52A /* RampMan.swift in Sources */,
+				1A3C28A71C5C5E1100D0A52A /* Building.swift in Sources */,
+				1A3C28A81C5C5E1100D0A52A /* GameScene.swift in Sources */,
+				1A3C28AB1C5C5E1100D0A52A /* Ramp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
