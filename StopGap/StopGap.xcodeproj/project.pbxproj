@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1A2FBC941C56A10F00910F5E /* Stairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2FBC931C56A10F00910F5E /* Stairs.swift */; };
+		1A37B7971C5D6221004FE489 /* GameOver.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A37B7961C5D6221004FE489 /* GameOver.sks */; };
+		1A37B7991C5D6241004FE489 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A37B7981C5D6241004FE489 /* GameOver.swift */; };
 		1A4BF7931C5C589900386B89 /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7921C5C589900386B89 /* MainMenu.sks */; };
 		1A7A09801C4FD42100B9BFF2 /* Building.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7A097F1C4FD42100B9BFF2 /* Building.swift */; };
 		1A7CC8C11C5088C500529D44 /* Ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7CC8C01C5088C500529D44 /* Ramp.swift */; };
@@ -44,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		1A2FBC931C56A10F00910F5E /* Stairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stairs.swift; sourceTree = "<group>"; };
+		1A37B7961C5D6221004FE489 /* GameOver.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOver.sks; sourceTree = "<group>"; };
+		1A37B7981C5D6241004FE489 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 		1A4BF7921C5C589900386B89 /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		1A7A097F1C4FD42100B9BFF2 /* Building.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Building.swift; sourceTree = "<group>"; };
 		1A7CC8C01C5088C500529D44 /* Ramp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ramp.swift; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 				1AA543AF1C484C9D00024CAE /* GameScene.sks */,
 				1ACDF38B1C57F66300A5662D /* MainMenu.swift */,
 				1A4BF7921C5C589900386B89 /* MainMenu.sks */,
+				1A37B7981C5D6241004FE489 /* GameOver.swift */,
+				1A37B7961C5D6221004FE489 /* GameOver.sks */,
 				1AA543DF1C4863B900024CAE /* RampMan.swift */,
 				1A7A097F1C4FD42100B9BFF2 /* Building.swift */,
 				1A7CC8C01C5088C500529D44 /* Ramp.swift */,
@@ -257,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A9913421C48648300C20FC8 /* Assets in Resources */,
+				1A37B7971C5D6221004FE489 /* GameOver.sks in Resources */,
 				1A4BF7931C5C589900386B89 /* MainMenu.sks in Resources */,
 				1AA543B01C484C9D00024CAE /* GameScene.sks in Resources */,
 				1AA543BC1C484C9D00024CAE /* LaunchScreen.storyboard in Resources */,
@@ -289,6 +296,7 @@
 				1AA543E01C4863B900024CAE /* RampMan.swift in Sources */,
 				1A2FBC941C56A10F00910F5E /* Stairs.swift in Sources */,
 				1AA543B21C484C9D00024CAE /* GameScene.swift in Sources */,
+				1A37B7991C5D6241004FE489 /* GameOver.swift in Sources */,
 				1ACDF38C1C57F66300A5662D /* MainMenu.swift in Sources */,
 				1A7A09801C4FD42100B9BFF2 /* Building.swift in Sources */,
 				1A7CC8C11C5088C500529D44 /* Ramp.swift in Sources */,

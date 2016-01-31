@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A37B79B1C5D629B004FE489 /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A37B79A1C5D629B004FE489 /* GameOver.swift */; };
+		1A37B79D1C5D62A4004FE489 /* GameOver.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A37B79C1C5D62A4004FE489 /* GameOver.sks */; };
 		1A3C28921C5C59E000D0A52A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A3C28881C5C59E000D0A52A /* GameScene.sks */; };
 		1A3C28951C5C59E000D0A52A /* MainMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A3C288B1C5C59E000D0A52A /* MainMenu.sks */; };
 		1A3C289B1C5C5A4F00D0A52A /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 1A3C289A1C5C5A4F00D0A52A /* Assets */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A37B79A1C5D629B004FE489 /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameOver.swift; path = ../../../StopGap/StopGap/GameOver.swift; sourceTree = "<group>"; };
+		1A37B79C1C5D62A4004FE489 /* GameOver.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOver.sks; sourceTree = "<group>"; };
 		1A3C28881C5C59E000D0A52A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		1A3C288B1C5C59E000D0A52A /* MainMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainMenu.sks; sourceTree = "<group>"; };
 		1A3C289A1C5C5A4F00D0A52A /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Assets; path = StopGapIpad/Assets; sourceTree = "<group>"; };
@@ -120,6 +124,8 @@
 				1A3C28881C5C59E000D0A52A /* GameScene.sks */,
 				1A3C28A21C5C5E1100D0A52A /* MainMenu.swift */,
 				1A3C288B1C5C59E000D0A52A /* MainMenu.sks */,
+				1A37B79A1C5D629B004FE489 /* GameOver.swift */,
+				1A37B79C1C5D62A4004FE489 /* GameOver.sks */,
 				1A3C28AF1C5C5E9B00D0A52A /* RampMan.swift */,
 				1A3C28A31C5C5E1100D0A52A /* Ramp.swift */,
 				1A3C289F1C5C5E1100D0A52A /* Building.swift */,
@@ -257,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A3C28921C5C59E000D0A52A /* GameScene.sks in Resources */,
+				1A37B79D1C5D62A4004FE489 /* GameOver.sks in Resources */,
 				1A3C289B1C5C5A4F00D0A52A /* Assets in Resources */,
 				1A4BF7ED1C5C596F00386B89 /* LaunchScreen.storyboard in Resources */,
 				1A4BF7EA1C5C596F00386B89 /* Assets.xcassets in Resources */,
@@ -289,6 +296,7 @@
 				1A3C28A91C5C5E1100D0A52A /* GameViewController.swift in Sources */,
 				1A3C28AD1C5C5E1100D0A52A /* Stairs.swift in Sources */,
 				1A3C28AA1C5C5E1100D0A52A /* MainMenu.swift in Sources */,
+				1A37B79B1C5D629B004FE489 /* GameOver.swift in Sources */,
 				1A3C28A61C5C5E1100D0A52A /* AppDelegate.swift in Sources */,
 				1A3C28B01C5C5E9B00D0A52A /* RampMan.swift in Sources */,
 				1A3C28A71C5C5E1100D0A52A /* Building.swift in Sources */,

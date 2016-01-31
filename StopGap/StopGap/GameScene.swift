@@ -34,14 +34,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var rampCollision = 0x1 << 1
     var rampManCollision = 0x1 << 2
     var stairCollision = 0x1 << 3
+    var buildingCollision = 0x1 << 4
+    
+    //Score vars
+    var totalTime:CFTimeInterval = 30.0
+    var hourTime:CFTimeInterval = 0
+    var lastHour:CFTimeInterval = 0
+    var actualHours = -1
+    var displayHours = 9 {
+        didSet {
+            hoursLabel.text = String(displayHours)
+        }
+    }
+    
+    //Label vars
+    var hoursLabel = SKLabelNode()
+    
     
     
     //MARK: Did move to view
     override func didMoveToView(view: SKView) {
+        hourTime = totalTime / 8
         //Initialize objects
         addMan(CGPointMake(frame.size.width / 2, frame.size.height / 9))
         addLine(CGPoint(x: frame.size.width / 1.5, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/1.5, y: 0))
         addLine(CGPoint(x: frame.size.width / 3, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/3, y: 0))
+        
+        //Initialize labels
+        hoursLabel = self.childNodeWithName("hoursLabel") as! SKLabelNode
+        hoursLabel.horizontalAlignmentMode = .Right
         self.physicsWorld.contactDelegate = self
     }
     
@@ -73,6 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             lastBuilding = currentTime + timeToBuilding
         }
+        updateHours(currentTime)
         
     }
     
@@ -230,15 +252,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             building.xPosition = frame.size.width / 2
         }
         building.position = CGPoint(x: building.xPosition, y: frame.size.height + 100)
+        building.zPosition = 1
+        building.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
+        building.physicsBody = SKPhysicsBody(rectangleOfSize: building.size)
+        building.physicsBody?.categoryBitMask = UInt32(buildingCollision)
+        building.physicsBody?.dynamic = true
+        building.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
+        building.physicsBody?.collisionBitMask = 0
+        building.physicsBody?.usesPreciseCollisionDetection = true
         building.size = CGSize(width: frame.size.height / 10, height: frame.size.height / 10)
         addChild(building)
-        //If the building has a ramp, it has no physics body
         if hasRamp {
             addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building)
         }
         else {
             addStairs(CGPoint(x: building.position.x, y: building.position.y - (building.size.height / 2)), building: building)
         }
+        
         //Move the building
         let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, -100), duration: buildingDuration))
         let stopBuilding = (SKAction.runBlock({
@@ -258,6 +288,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func addRamp(position: CGPoint, building: SKSpriteNode) {
         let ramp = Ramp()
         ramp.position = position
+        ramp.zPosition = -1
         ramp.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
         ramp.physicsBody = SKPhysicsBody(rectangleOfSize: ramp.size)
         ramp.physicsBody?.categoryBitMask = UInt32(rampCollision)
@@ -286,6 +317,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func addStairs(position: CGPoint, building: SKSpriteNode) {
         let stairs = Stairs()
         stairs.position = position
+        stairs.zPosition = -1
         stairs.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
         stairs.physicsBody = SKPhysicsBody(rectangleOfSize: stairs.size)
         stairs.physicsBody?.categoryBitMask = UInt32(stairCollision)
@@ -337,5 +369,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Called when the ramp man hits stairs
     func hitStairs(man: SKSpriteNode, stairs: SKSpriteNode){
         print("stairs")
+    }
+    
+    //MARK: Time functions
+    //Updates the number of hours taken and translates it into the time to 
+    //be displayed on the screen.
+    func updateHours(currentTime:CFTimeInterval){
+        if currentTime - lastHour > hourTime{
+            actualHours++
+            lastHour = currentTime
+        }
+        if actualHours == 0 {
+            displayHours = 9
+        }
+        if actualHours == 1 {
+            displayHours = 10
+        }
+        if actualHours == 2 {
+            displayHours = 11
+        }
+        if actualHours == 3 {
+            displayHours = 12
+        }
+        if actualHours == 4 {
+            displayHours = 1
+        }
+        if actualHours == 5 {
+            displayHours = 2
+        }
+        if actualHours == 6 {
+            displayHours = 3
+        }
+        if actualHours == 7 {
+            displayHours = 4
+        }
+        if actualHours == 8 {
+            displayHours = 5
+        }
     }
 }
