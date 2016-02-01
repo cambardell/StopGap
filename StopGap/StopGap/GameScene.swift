@@ -26,6 +26,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Ramp vars
     var ramps = [Ramp]()
+    var buildingsEntered = 0
+    var buildingsEnteredScore = 10{
+        didSet {
+            storesLabel.text = String(buildingsEnteredScore)
+        }
+    }
+    var totalRampNumber = 10
+    var roundRampNumber = 0
+    var lastHitRamp:CFTimeInterval = 0
+    var enterBuildingTime: CFTimeInterval = 1
     
     //Stair vars
     var stairList = [Stairs]()
@@ -40,8 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var totalTime:CFTimeInterval = 30.0
     var hourTime:CFTimeInterval = 0
     var lastHour:CFTimeInterval = 0
-    var actualHours = -1
-    var displayHours = 9 {
+    var displayHours = 8 {
         didSet {
             hoursLabel.text = String(displayHours)
         }
@@ -49,7 +58,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Label vars
     var hoursLabel = SKLabelNode()
+    var storesLabel = SKLabelNode()
     
+    //Time vars
+    var timeNow:CFTimeInterval = 0
     
     
     //MARK: Did move to view
@@ -63,12 +75,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Initialize labels
         hoursLabel = self.childNodeWithName("hoursLabel") as! SKLabelNode
         hoursLabel.horizontalAlignmentMode = .Right
+        storesLabel = self.childNodeWithName("storesLabel") as! SKLabelNode
+        storesLabel.horizontalAlignmentMode = .Left
+        
         self.physicsWorld.contactDelegate = self
     }
     
     //MARK: Update
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        timeNow = currentTime
         //Set the lane number
         if rampMan.position.x > frame.size.width / 1.5 {
             laneNumber = 1
@@ -81,7 +97,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if rampMan.position.x < frame.size.width / 3 {
             laneNumber = 3
         }
-        if currentTime - lastBuilding > timeToBuilding {
+        if currentTime - lastBuilding > timeToBuilding && roundRampNumber != totalRampNumber {
             let random = Int((arc4random_uniform(2)))
             switch random {
             case 0:
@@ -235,12 +251,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //MARK: Building funcs
     //Returns a new building, takes a boolean for ramp as a parameter.
     func addBuilding(hasRamp: Bool) {
+        var building:Building
         //Add a new building in the correct lane
         let lane = Int((arc4random_uniform(3)))
-        let building = Building(lane: lane, hasRamp: hasRamp)
+        
+        //If the building is the last in the round, set the lastRound bool to true.
+        building = Building(lane: lane, hasRamp: hasRamp)
         
         buildings.append(building)
        
+        //Set the correct lane coordinates
         switch lane {
         case 0:
             building.xPosition = frame.size.width / 6
@@ -251,18 +271,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         default:
             building.xPosition = frame.size.width / 2
         }
+        //Set up building position and physics
         building.position = CGPoint(x: building.xPosition, y: frame.size.height + 100)
         building.zPosition = 1
         building.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
         building.physicsBody = SKPhysicsBody(rectangleOfSize: building.size)
+        //Sets the buildings contact category
         building.physicsBody?.categoryBitMask = UInt32(buildingCollision)
         building.physicsBody?.dynamic = true
+        //Sets the category that will call the collision function if the building hits it.
         building.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
         building.physicsBody?.collisionBitMask = 0
         building.physicsBody?.usesPreciseCollisionDetection = true
         building.size = CGSize(width: frame.size.height / 10, height: frame.size.height / 10)
         addChild(building)
+        
+        //If the building has a ramp, increment the total number of ramps in the round.
         if hasRamp {
+            roundRampNumber += 1
             addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building)
         }
         else {
@@ -359,16 +385,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (firstBody.categoryBitMask & UInt32(rampManCollision)) != 0 && (secondBody.categoryBitMask & UInt32(stairCollision)) != 0 {
             hitStairs(firstBody.node as! SKSpriteNode, stairs: secondBody.node as! SKSpriteNode)
         }
+        if (firstBody.categoryBitMask & UInt32(rampManCollision)) != 0 && (secondBody.categoryBitMask & UInt32(buildingCollision)) != 0 {
+            hitBuilding(firstBody.node as! RampMan, building: secondBody.node as! Building)
+        }
     }
     
     //Called when the ramp man hits a ramp.
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
-        print("building")
+        //Increments buildings entered
+        buildingsEntered += 1
+        buildingsEnteredScore -= 1
+        lastHitRamp = timeNow
+        print("buildings entered: ",buildingsEntered)
     }
     
     //Called when the ramp man hits stairs
     func hitStairs(man: SKSpriteNode, stairs: SKSpriteNode){
-        print("stairs")
+        if timeNow - lastHitRamp > enterBuildingTime {
+            print("hit stairs")
+            buildingsEntered = 0
+            buildingsEnteredScore = 10
+        }
+    }
+    
+    //Called when the ramp man hits a building
+    func hitBuilding(man: RampMan, building: Building){
+        if timeNow - lastHitRamp > enterBuildingTime {
+            print("hit building")
+            buildingsEntered = 0
+            buildingsEnteredScore = 10
+        }
+        
     }
     
     //MARK: Time functions
@@ -376,35 +423,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //be displayed on the screen.
     func updateHours(currentTime:CFTimeInterval){
         if currentTime - lastHour > hourTime{
-            actualHours++
+            displayHours++
+            if displayHours == 13 {
+                displayHours == 1
+            }
             lastHour = currentTime
         }
-        if actualHours == 0 {
-            displayHours = 9
-        }
-        if actualHours == 1 {
-            displayHours = 10
-        }
-        if actualHours == 2 {
-            displayHours = 11
-        }
-        if actualHours == 3 {
-            displayHours = 12
-        }
-        if actualHours == 4 {
-            displayHours = 1
-        }
-        if actualHours == 5 {
-            displayHours = 2
-        }
-        if actualHours == 6 {
-            displayHours = 3
-        }
-        if actualHours == 7 {
-            displayHours = 4
-        }
-        if actualHours == 8 {
-            displayHours = 5
-        }
+    }
+    
+    //Function called when the correct numbers of buildings are entered.
+    func shouldGameEnd() {
+        print("game ended")
     }
 }
