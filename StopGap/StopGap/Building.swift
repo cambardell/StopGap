@@ -15,9 +15,16 @@ class Building: SKSpriteNode {
     var hasRamp: Bool
     var xPosition: CGFloat
     var lastBuilding: Bool
-    
-    init(lane: Int, hasRamp: Bool, lastBuilding: Bool) {
-        let texture = SKTexture(imageNamed: "Building")
+    var right: Bool
+    init(lane: Int, hasRamp: Bool, lastBuilding: Bool, right: Bool) {
+        let texture : SKTexture
+        self.right = right
+        if self.right {
+            texture = SKTexture(imageNamed: "BuildingLeft")
+        }
+        else {
+            texture = SKTexture(imageNamed: "BuildingRight")
+        }
         self.lane = lane
         self.hasRamp = hasRamp
         self.xPosition = 384
@@ -26,6 +33,7 @@ class Building: SKSpriteNode {
     }
     required init?(coder aDecoder: NSCoder) {
         self.lane = 2
+        self.right = false
         self.hasRamp = false
         self.xPosition = 384
         self.lastBuilding = false
