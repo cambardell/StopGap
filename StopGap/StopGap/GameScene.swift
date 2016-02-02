@@ -23,7 +23,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Ramp vars
     var ramps = [Ramp]()
-    var buildingsEntered = 0
     var buildingsEnteredScore = roundVars.buildingsEnteredScore{
         didSet {
             storesLabel.text = String(buildingsEnteredScore)
@@ -303,6 +302,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Stops all the buildings move actions
     func buildingMoveEnded(building: Building) {
+        if building.lastBuilding {
+            shouldGameEnd()
+        }
         building.removeFromParent()
         buildings.removeAtIndex(0)
     }
@@ -391,18 +393,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
         //Increments buildings entered
         if buildingsEnteredScore > 0 {
-            buildingsEntered += 1
             buildingsEnteredScore -= 1
         }
+        roundVars.buildingsEntered += 1
         lastHitRamp = timeNow
-        print("buildings entered: ",buildingsEntered)
+        print("buildings entered: ",roundVars.buildingsEntered)
     }
     
     //Called when the ramp man hits stairs
     func hitStairs(man: SKSpriteNode, stairs: SKSpriteNode){
         if timeNow - lastHitRamp > enterBuildingTime {
             print("hit stairs")
-            buildingsEntered = 0
+            roundVars.buildingsEntered = 0
             buildingsEnteredScore = 10
         }
     }
@@ -411,10 +413,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func hitBuilding(man: RampMan, building: Building){
         if timeNow - lastHitRamp > enterBuildingTime {
             print("hit building")
-            buildingsEntered = 0
+            roundVars.buildingsEntered = 0
             buildingsEnteredScore = 10
         }
-        
     }
     
     //MARK: Time functions
@@ -439,6 +440,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Function called when time is up and last building enters
     func shouldGameEnd() {
         print("game ended")
+        if buildingsEnteredScore == 0 {
+            endRoundVars.didPlayerWin = true
+        }
+        else {
+            endRoundVars.didPlayerWin = false
+        }
+        if let scene = GameOver(fileNamed: "GameOver"){
+            scene.scaleMode = .AspectFit
+            self.view?.presentScene(scene, transition: reveal)
+        }
     }
     
     //Function called when time runs out
