@@ -19,20 +19,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //building vars
     var buildings = [Building]()
-    var buildingSpeed:CGFloat = 10.0
-    var timeToBuilding: CFTimeInterval = 0.7
     var lastBuilding: CFTimeInterval = 0.0
-    var buildingDuration = 5.0
     
     //Ramp vars
     var ramps = [Ramp]()
     var buildingsEntered = 0
-    var buildingsEnteredScore = 10{
+    var buildingsEnteredScore = roundVars.buildingsEnteredScore{
         didSet {
             storesLabel.text = String(buildingsEnteredScore)
         }
     }
-    var totalRampNumber = 10
     var roundRampNumber = 0
     var lastHitRamp:CFTimeInterval = 0
     var enterBuildingTime: CFTimeInterval = 1
@@ -47,9 +43,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var buildingCollision = 0x1 << 4
     
     //Score vars
-    var totalTime:CFTimeInterval = 30.0
     var hourTime:CFTimeInterval = 0
     var lastHour:CFTimeInterval = 0
+    var timeUp = false
     var displayHours = 8 {
         didSet {
             hoursLabel.text = String(displayHours)
@@ -62,11 +58,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Time vars
     var timeNow:CFTimeInterval = 0
-    
+
     
     //MARK: Did move to view
     override func didMoveToView(view: SKView) {
-        hourTime = totalTime / 8
+        hourTime = roundVars.totalTime / 8
         //Initialize objects
         addMan(CGPointMake(frame.size.width / 2, frame.size.height / 9))
         addLine(CGPoint(x: frame.size.width / 1.5, y: frame.size.height), startPoint: CGPoint(x: frame.size.width/1.5, y: 0))
@@ -97,21 +93,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if rampMan.position.x < frame.size.width / 3 {
             laneNumber = 3
         }
-        if currentTime - lastBuilding > timeToBuilding && roundRampNumber != totalRampNumber {
+        if currentTime - lastBuilding > roundVars.timeToBuilding && !timeUp{
             let random = Int((arc4random_uniform(2)))
             switch random {
             case 0:
-                addBuilding(false)
+                addBuilding(false, lastBuilding: false)
             case 1:
-                addBuilding(true)
+                addBuilding(true, lastBuilding: false)
             default:
-                addBuilding(true)
+                addBuilding(true, lastBuilding: false)
             }
             
-            lastBuilding = currentTime + timeToBuilding
+            lastBuilding = currentTime + roundVars.timeToBuilding
         }
-        updateHours(currentTime)
-        
+        if timeUp == false {
+            updateHours(currentTime)
+        }
     }
     
     //MARK: Touches
@@ -250,13 +247,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //MARK: Building funcs
     //Returns a new building, takes a boolean for ramp as a parameter.
-    func addBuilding(hasRamp: Bool) {
+    func addBuilding(hasRamp: Bool, lastBuilding: Bool) {
         var building:Building
         //Add a new building in the correct lane
         let lane = Int((arc4random_uniform(3)))
         
         //If the building is the last in the round, set the lastRound bool to true.
-        building = Building(lane: lane, hasRamp: hasRamp)
+        building = Building(lane: lane, hasRamp: hasRamp, lastBuilding: lastBuilding)
         
         buildings.append(building)
        
@@ -296,7 +293,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         //Move the building
-        let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, -100), duration: buildingDuration))
+        let moveBuilding = (SKAction.moveTo(CGPointMake(building.position.x, -100), duration: roundVars.buildingDuration))
         let stopBuilding = (SKAction.runBlock({
             self.buildingMoveEnded(building)
         }))
@@ -326,7 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(ramp)
         ramps.append(ramp)
         //Actions that animate the ramp
-        let moveRamp = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: buildingDuration))
+        let moveRamp = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: roundVars.buildingDuration))
         let stopRamp = (SKAction.runBlock({
             self.rampMoveEnded(ramp)
         }))
@@ -354,7 +351,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(stairs)
         stairList.append(stairs)
         //Actions that animate the stairs
-        let movestairs = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: buildingDuration))
+        let movestairs = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: roundVars.buildingDuration))
         let stopstairs = (SKAction.runBlock({
             self.stairsMoveEnded(stairs)
         }))
@@ -393,8 +390,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //Called when the ramp man hits a ramp.
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
         //Increments buildings entered
-        buildingsEntered += 1
-        buildingsEnteredScore -= 1
+        if buildingsEnteredScore > 0 {
+            buildingsEntered += 1
+            buildingsEnteredScore -= 1
+        }
         lastHitRamp = timeNow
         print("buildings entered: ",buildingsEntered)
     }
@@ -425,14 +424,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if currentTime - lastHour > hourTime{
             displayHours++
             if displayHours == 13 {
-                displayHours == 1
+                displayHours = 1
             }
             lastHour = currentTime
+            
+            //If it is five o'clock, stop updating time and add one more building
+            if displayHours == 5{
+                timeUp = true
+                timeIsUp()
+            }
         }
     }
     
-    //Function called when the correct numbers of buildings are entered.
+    //Function called when time is up and last building enters
     func shouldGameEnd() {
         print("game ended")
+    }
+    
+    //Function called when time runs out
+    func timeIsUp() {
+        addBuilding(true, lastBuilding: true)
     }
 }

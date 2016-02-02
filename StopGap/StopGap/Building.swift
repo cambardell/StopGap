@@ -14,18 +14,21 @@ class Building: SKSpriteNode {
     var lane: Int
     var hasRamp: Bool
     var xPosition: CGFloat
+    var lastBuilding: Bool
     
-    init(lane: Int, hasRamp: Bool) {
+    init(lane: Int, hasRamp: Bool, lastBuilding: Bool) {
         let texture = SKTexture(imageNamed: "Building")
         self.lane = lane
         self.hasRamp = hasRamp
         self.xPosition = 384
+        self.lastBuilding = lastBuilding
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
     }
     required init?(coder aDecoder: NSCoder) {
         self.lane = 2
         self.hasRamp = false
         self.xPosition = 384
+        self.lastBuilding = false
         super.init(coder: aDecoder)
     }
 }
