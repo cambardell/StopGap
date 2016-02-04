@@ -9,12 +9,20 @@
 import SpriteKit
 
 class Stairs: SKSpriteNode {
-    init() {
-        let texture = SKTexture(imageNamed: "Stairs")
+    var right:Bool
+    init(right:Bool) {
+        let texture : SKTexture
+        self.right = right
+        if right {
+            texture = SKTexture(imageNamed: "StairsRight")
+        }
+        else {
+            texture = SKTexture(imageNamed: "StairsLeft")
+        }
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
     }
-    
     required init?(coder aDecoder: NSCoder) {
+        self.right = true
         super.init(coder: aDecoder)
     }
 

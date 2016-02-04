@@ -300,7 +300,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         else {
-            addStairs(CGPoint(x: building.position.x, y: building.position.y - (building.size.height / 2)), building: building)
+            if lane == 0 {
+                addStairs(CGPoint(x: building.position.x, y: building.position.y - (building.size.height / 2)), building: building, right: false)
+            }
+            else {
+                addStairs(CGPoint(x: building.position.x, y: building.position.y - (building.size.height / 2)), building: building, right: true)
+            }
+            
         }
         
         //Move the building
@@ -358,8 +364,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ramps.removeAtIndex(0)
     }
     
-    func addStairs(position: CGPoint, building: SKSpriteNode) {
-        let stairs = Stairs()
+    func addStairs(position: CGPoint, building: SKSpriteNode, right: Bool) {
+        let stairs: Stairs
+        if right{
+            stairs = Stairs(right: right)
+        }
+        else {
+            stairs = Stairs(right: right)
+        }
+
         stairs.position = position
         stairs.zPosition = -1
         stairs.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
