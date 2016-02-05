@@ -13,7 +13,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var rampMan = SKSpriteNode()
     var rampManMoveRight = false
     var startingLane = 2
-    var inBuilding = false
     
     //lane vars
     var laneNumber = 2
@@ -75,6 +74,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         storesLabel.horizontalAlignmentMode = .Left
         
         self.physicsWorld.contactDelegate = self
+        
+        //Set the initial text of the label.
+        storesLabel.text = String(roundVars.buildingsEnteredScore)
     }
     
     //MARK: Update
@@ -118,13 +120,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let touchposition = touch.locationInNode(self)
             //Call the move function with the correct lane as the parameter.
             //When moving to the middle, specify if it is moving from the left side or right side.
-            if touchposition.x > frame.size.width / 1.5 && laneNumber != 1 && !inBuilding{
+            if touchposition.x > frame.size.width / 1.5 && laneNumber != 1 {
                 rampManMoveRight = true
                 moveMan(1)
+                print("1")
             }
-            if touchposition.x < frame.size.width / 1.5 && touchposition.x > frame.size.width / 3 && laneNumber != 2 && !inBuilding {
+            if touchposition.x < frame.size.width / 1.5 && touchposition.x > frame.size.width / 3 && laneNumber != 2 {
                 moveMan(2)
-                
+                print("2")
                 if laneNumber == 1 {
                     rampManMoveRight = true
                 }
@@ -132,8 +135,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     rampManMoveRight = false
                 }
             }
-            if touchposition.x < frame.size.width/3 && laneNumber != 3 && !inBuilding {
+            if touchposition.x < frame.size.width/3 && laneNumber != 3 {
                 moveMan(3)
+                print("3")
                 rampManMoveRight = false
             }
         }
@@ -276,7 +280,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Set up building position and physics
         building.position = CGPoint(x: building.xPosition, y: frame.size.height + 100)
         building.zPosition = 1
-        building.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
+        building.size = CGSize(width: frame.size.height / 30, height: frame.size.height / 30)
         building.physicsBody = SKPhysicsBody(rectangleOfSize: building.size)
         //Sets the buildings contact category
         building.physicsBody?.categoryBitMask = UInt32(buildingCollision)
@@ -421,22 +425,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func didEndContact(contact: SKPhysicsContact) {
-        var firstBody = SKPhysicsBody()
-        var secondBody = SKPhysicsBody()
-        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
-            firstBody = contact.bodyA
-            secondBody = contact.bodyB
-        } else {
-            firstBody = contact.bodyB
-            secondBody = contact.bodyA
-        }
-        if (firstBody.categoryBitMask & UInt32(rampManCollision)) != 0 && (secondBody.categoryBitMask & UInt32(buildingCollision)) != 0 {
-           leaveBuilding(firstBody.node as! RampMan, building: secondBody.node as! Building)
-        }
-
-    }
-    
     //Called when the ramp man hits a ramp.
     func enterBuilding(ramp: SKSpriteNode, man: SKSpriteNode){
         //Increments buildings entered
@@ -445,32 +433,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         roundVars.buildingsEntered += 1
         lastHitRamp = timeNow
-        inBuilding = true
-        print("buildings entered: ",roundVars.buildingsEntered)
     }
-    
-    func leaveBuilding(man: RampMan, building: Building) {
-        inBuilding = false
-    }
-    
+
     //Called when the ramp man hits stairs
     func hitStairs(man: SKSpriteNode, stairs: SKSpriteNode){
         if timeNow - lastHitRamp > enterBuildingTime {
-            print("hit stairs")
             roundVars.buildingsEntered = 0
-            buildingsEnteredScore = 10
+            buildingsEnteredScore = roundVars.numberOfBuildingsReset
         }
-        inBuilding = true
     }
     
     //Called when the ramp man hits a building
     func hitBuilding(man: RampMan, building: Building){
         if timeNow - lastHitRamp > enterBuildingTime {
-            print("hit building")
             roundVars.buildingsEntered = 0
-            buildingsEnteredScore = 10
+            buildingsEnteredScore = roundVars.numberOfBuildingsReset
         }
-        inBuilding = true
     }
     
     //MARK: Time functions
@@ -494,7 +472,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //Function called when time is up and last building enters
     func shouldGameEnd() {
-        print("game ended")
         if buildingsEnteredScore == 0 {
             endRoundVars.didPlayerWin = true
         }
@@ -502,7 +479,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             endRoundVars.didPlayerWin = false
         }
         if let scene = GameOver(fileNamed: "GameOver"){
-            scene.scaleMode = .AspectFit
+            scene.scaleMode = .AspectFill
             self.view?.presentScene(scene, transition: reveal)
         }
     }
