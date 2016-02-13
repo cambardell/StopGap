@@ -21,6 +21,8 @@ struct roundVars {
     static var buildingsEntered = 0
     //Total number of stores that must be entered. 
     static var numberOfBuildingsReset = 0
+    //Which rampman skin the player picks
+    static var rampSkin = "RampMan"
 }
 
 //Variables that control the end of the game, such as determining if the player won.
@@ -37,7 +39,7 @@ class MainMenu: SKScene {
     var bellevilleLabel = SKLabelNode()
     var torontoLabel = SKLabelNode()
     var kitchenerLabel = SKLabelNode()
-    override func update(currentTime: NSTimeInterval) {
+    override func didMoveToView(view: SKView) {
         bellevilleLabel = self.childNodeWithName("bellevilleLabel") as! SKLabelNode
         torontoLabel = self.childNodeWithName("torontoLabel") as! SKLabelNode
         kitchenerLabel = self.childNodeWithName("kitchenerLabel") as! SKLabelNode
@@ -56,7 +58,7 @@ class MainMenu: SKScene {
                 roundVars.buildingsEnteredScore = 10
                 roundVars.totalTime = 30.0
                 roundVars.numberOfBuildingsReset = 10
-                if let scene = GameScene(fileNamed: "GameScene"){
+                if let scene = selectCharacter(fileNamed: "selectCharacter"){
                     scene.scaleMode = .AspectFill
                     self.view?.presentScene(scene, transition: reveal)
                 }
@@ -68,7 +70,7 @@ class MainMenu: SKScene {
                 roundVars.buildingsEnteredScore = 20
                 roundVars.totalTime = 45.0
                 roundVars.numberOfBuildingsReset = 20
-                if let scene = GameScene(fileNamed: "GameScene"){
+                if let scene = selectCharacter(fileNamed: "selectCharacter"){
                     scene.scaleMode = .AspectFill
                     self.view?.presentScene(scene, transition: reveal)
                 }
@@ -80,7 +82,7 @@ class MainMenu: SKScene {
                 roundVars.buildingsEnteredScore = 40
                 roundVars.totalTime = 60.0
                 roundVars.numberOfBuildingsReset = 40
-                if let scene = GameScene(fileNamed: "GameScene"){
+                if let scene = selectCharacter(fileNamed: "selectCharacter"){
                     scene.scaleMode = .AspectFill
                     self.view?.presentScene(scene, transition: reveal)
                 }

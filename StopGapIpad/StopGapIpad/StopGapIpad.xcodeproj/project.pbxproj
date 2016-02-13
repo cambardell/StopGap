@@ -20,6 +20,8 @@
 		1A3C28AB1C5C5E1100D0A52A /* Ramp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28A31C5C5E1100D0A52A /* Ramp.swift */; };
 		1A3C28AD1C5C5E1100D0A52A /* Stairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28A51C5C5E1100D0A52A /* Stairs.swift */; };
 		1A3C28B01C5C5E9B00D0A52A /* RampMan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3C28AF1C5C5E9B00D0A52A /* RampMan.swift */; };
+		1A4239BD1C6FAC11004AE055 /* selectCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4239BC1C6FAC11004AE055 /* selectCharacter.swift */; };
+		1A4239BF1C6FAC1A004AE055 /* selectCharacter.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1A4239BE1C6FAC1A004AE055 /* selectCharacter.sks */; };
 		1A4BF7E81C5C596F00386B89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7E61C5C596F00386B89 /* Main.storyboard */; };
 		1A4BF7EA1C5C596F00386B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7E91C5C596F00386B89 /* Assets.xcassets */; };
 		1A4BF7ED1C5C596F00386B89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BF7EB1C5C596F00386B89 /* LaunchScreen.storyboard */; };
@@ -58,6 +60,8 @@
 		1A3C28A31C5C5E1100D0A52A /* Ramp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ramp.swift; path = ../../../StopGap/StopGap/Ramp.swift; sourceTree = "<group>"; };
 		1A3C28A51C5C5E1100D0A52A /* Stairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stairs.swift; path = ../../../StopGap/StopGap/Stairs.swift; sourceTree = "<group>"; };
 		1A3C28AF1C5C5E9B00D0A52A /* RampMan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RampMan.swift; path = ../../../StopGap/StopGap/RampMan.swift; sourceTree = "<group>"; };
+		1A4239BC1C6FAC11004AE055 /* selectCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = selectCharacter.swift; path = ../../../StopGap/StopGap/selectCharacter.swift; sourceTree = "<group>"; };
+		1A4239BE1C6FAC1A004AE055 /* selectCharacter.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = selectCharacter.sks; sourceTree = "<group>"; };
 		1A4BF7DB1C5C596F00386B89 /* StopGapIpad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StopGapIpad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A4BF7E71C5C596F00386B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1A4BF7E91C5C596F00386B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,7 +128,9 @@
 				1A3C28881C5C59E000D0A52A /* GameScene.sks */,
 				1A3C28A21C5C5E1100D0A52A /* MainMenu.swift */,
 				1A3C288B1C5C59E000D0A52A /* MainMenu.sks */,
+				1A4239BC1C6FAC11004AE055 /* selectCharacter.swift */,
 				1A37B79A1C5D629B004FE489 /* GameOver.swift */,
+				1A4239BE1C6FAC1A004AE055 /* selectCharacter.sks */,
 				1A37B79C1C5D62A4004FE489 /* GameOver.sks */,
 				1A3C28AF1C5C5E9B00D0A52A /* RampMan.swift */,
 				1A3C28A31C5C5E1100D0A52A /* Ramp.swift */,
@@ -269,6 +275,7 @@
 				1A4BF7EA1C5C596F00386B89 /* Assets.xcassets in Resources */,
 				1A3C28951C5C59E000D0A52A /* MainMenu.sks in Resources */,
 				1A4BF7E81C5C596F00386B89 /* Main.storyboard in Resources */,
+				1A4239BF1C6FAC1A004AE055 /* selectCharacter.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +305,7 @@
 				1A3C28AA1C5C5E1100D0A52A /* MainMenu.swift in Sources */,
 				1A37B79B1C5D629B004FE489 /* GameOver.swift in Sources */,
 				1A3C28A61C5C5E1100D0A52A /* AppDelegate.swift in Sources */,
+				1A4239BD1C6FAC11004AE055 /* selectCharacter.swift in Sources */,
 				1A3C28B01C5C5E9B00D0A52A /* RampMan.swift in Sources */,
 				1A3C28A71C5C5E1100D0A52A /* Building.swift in Sources */,
 				1A3C28A81C5C5E1100D0A52A /* GameScene.swift in Sources */,

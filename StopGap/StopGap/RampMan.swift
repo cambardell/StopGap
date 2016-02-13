@@ -14,7 +14,19 @@ class RampMan: SKSpriteNode {
     var laneTwo:Bool
     var laneThree:Bool
     init(position: CGPoint) {
-        let texture = SKTexture(imageNamed: "RampMan")
+        var texture : SKTexture
+        //Switch the skin of the rampman based on the skin the user selected
+        switch roundVars.rampSkin {
+        case "RampMan":
+             texture = SKTexture(imageNamed: "RampMan")
+        case "Walker":
+             texture = SKTexture(imageNamed: "RampMan")
+        case "Stroller":
+             texture = SKTexture(imageNamed: "RampMan")
+        default:
+             texture = SKTexture(imageNamed: "RampMan")
+        }
+        
         self.laneOne = false
         self.laneTwo = true
         self.laneThree = false
