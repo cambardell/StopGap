@@ -111,6 +111,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if timeUp == false {
             updateHours(currentTime)
         }
+        
+        for ramp in ramps {
+            if ramp.position.y < -50 {
+                ramps.removeFirst()
+                ramp.removeFromParent()
+            }
+        }
+        
+        for stair in stairList {
+            if stair.position.y < -50 {
+                stairList.removeFirst()
+                stair.removeFromParent()
+            }
+        }
     }
     
     //MARK: Touches
@@ -255,14 +269,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var building:Building
         //Add a new building in the correct lane
         let lane = Int((arc4random_uniform(3)))
-        if lane == 0 {
-            //If the building is the last in the round, set the lastRound bool to true.
-            building = Building(lane: lane, hasRamp: hasRamp, lastBuilding: lastBuilding, right: false)
-        }
-        else {
-            //If the building is the last in the round, set the lastRound bool to true.
-            building = Building(lane: lane, hasRamp: hasRamp, lastBuilding: lastBuilding, right: true)
-        }
+        
+        building = Building(lane: lane, hasRamp: hasRamp, lastBuilding: lastBuilding)
         
         buildings.append(building)
        
@@ -277,38 +285,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         default:
             building.xPosition = frame.size.width / 2
         }
+        
         //Set up building position and physics
         building.position = CGPoint(x: building.xPosition, y: frame.size.height + 100)
-        building.zPosition = 1
+        building.zPosition = -1
         building.size = CGSize(width: frame.size.height / 30, height: frame.size.height / 30)
         building.physicsBody = SKPhysicsBody(rectangleOfSize: building.size)
+        
         //Sets the buildings contact category
         building.physicsBody?.categoryBitMask = UInt32(buildingCollision)
         building.physicsBody?.dynamic = true
+        building.physicsBody?.allowsRotation = false
+        
         //Sets the category that will call the collision function if the building hits it.
         building.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
         building.physicsBody?.collisionBitMask = 0
         building.physicsBody?.usesPreciseCollisionDetection = true
-        building.size = CGSize(width: frame.size.height / 10, height: frame.size.height / 10)
+        building.size = CGSize(width: frame.size.height / 8, height: frame.size.height / 8)
         addChild(building)
         
         //If the building has a ramp, increment the total number of ramps in the round.
         if hasRamp {
             roundRampNumber += 1
             if lane == 0 {
-                addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building, right: false)
+                addRamp(CGPoint(x: building.position.x, y: building.frame.minY), building: building, lane: 0)
             }
-            else {
-                addRamp(CGPoint(x: building.position.x, y: building.position.y - (building.size.height/2)), building: building, right: true)
+            if lane == 1 {
+                addRamp(CGPoint(x: building.position.x, y: building.frame.minY), building: building, lane: 1)
+            }
+            if lane == 2 {
+                addRamp(CGPoint(x: building.position.x, y: building.frame.minY), building: building, lane: 2)
             }
             
         }
         else {
             if lane == 0 {
-                addStairs(CGPoint(x: building.position.x, y: building.position.y - (building.size.height / 2)), building: building, right: false)
+                addStairs(CGPoint(x: building.position.x, y: building.frame.minY), building: building, lane: 0)
             }
-            else {
-                addStairs(CGPoint(x: building.position.x, y: building.position.y - (building.size.height / 2)), building: building, right: true)
+            if lane == 1 {
+                addStairs(CGPoint(x: building.position.x, y: building.frame.minY), building: building, lane: 1)
+            }
+            if lane == 2 {
+                addStairs(CGPoint(x: building.position.x, y: building.frame.minY), building: building, lane: 2)
             }
             
         }
@@ -332,17 +350,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: Ramp funcs
-    func addRamp(position: CGPoint, building: SKSpriteNode, right: Bool) {
+    func addRamp(position: CGPoint, building: SKSpriteNode, lane: Int) {
         let ramp: Ramp
-        if right{
-            ramp = Ramp(right: right)
-        }
-        else {
-            ramp = Ramp(right: right)
-        }
+        ramp = Ramp(lane: lane)
         
         ramp.position = position
-        ramp.zPosition = -1
+        ramp.zPosition = 1
         ramp.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
         ramp.physicsBody = SKPhysicsBody(rectangleOfSize: ramp.size)
         ramp.physicsBody?.categoryBitMask = UInt32(rampCollision)
@@ -350,35 +363,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ramp.physicsBody?.contactTestBitMask = UInt32(rampManCollision)
         ramp.physicsBody?.collisionBitMask = 0
         ramp.physicsBody?.usesPreciseCollisionDetection = true
-
+       
         addChild(ramp)
         ramps.append(ramp)
-        //Actions that animate the ramp
-        let moveRamp = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: roundVars.buildingDuration))
-        let stopRamp = (SKAction.runBlock({
-            self.rampMoveEnded(ramp)
-        }))
-        let moveAction = SKAction.sequence([moveRamp, stopRamp])
-        ramp.runAction(moveAction)
+        let myJoint = SKPhysicsJointFixed.jointWithBodyA(building.physicsBody!, bodyB: ramp.physicsBody!, anchor: CGPoint(x: building.frame.maxX, y: ramp.frame.maxY))
+        let myJoint2 = SKPhysicsJointFixed.jointWithBodyA(building.physicsBody!, bodyB: ramp.physicsBody!, anchor: CGPoint(x: building.frame.minX, y: ramp.frame.maxY))
+        self.physicsWorld.addJoint(myJoint2)
+        self.physicsWorld.addJoint(myJoint)
+        
     }
     
-    //Remove the ramp from the scene
-    func rampMoveEnded(ramp: Ramp){
-        ramp.removeFromParent()
-        ramps.removeAtIndex(0)
-    }
-    
-    func addStairs(position: CGPoint, building: SKSpriteNode, right: Bool) {
+    func addStairs(position: CGPoint, building: SKSpriteNode, lane: Int) {
         let stairs: Stairs
-        if right{
-            stairs = Stairs(right: right)
-        }
-        else {
-            stairs = Stairs(right: right)
-        }
+        stairs = Stairs(lane: lane)
 
         stairs.position = position
-        stairs.zPosition = -1
+        stairs.zPosition = 1
         stairs.size = CGSize(width: frame.size.height / 20, height: frame.size.height / 20)
         stairs.physicsBody = SKPhysicsBody(rectangleOfSize: stairs.size)
         stairs.physicsBody?.categoryBitMask = UInt32(stairCollision)
@@ -388,18 +388,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         stairs.physicsBody?.usesPreciseCollisionDetection = true
         addChild(stairs)
         stairList.append(stairs)
-        //Actions that animate the stairs
-        let movestairs = (SKAction.moveTo(CGPointMake(position.x,  -100 - building.size.height/2), duration: roundVars.buildingDuration))
-        let stopstairs = (SKAction.runBlock({
-            self.stairsMoveEnded(stairs)
-        }))
-        let moveAction = SKAction.sequence([movestairs, stopstairs])
-        stairs.runAction(moveAction)
-    }
-    
-    func stairsMoveEnded(stairs: Stairs){
-        stairList.removeAtIndex(0)
-        stairs.removeFromParent()
+        
+        let myJoint = SKPhysicsJointFixed.jointWithBodyA(building.physicsBody!, bodyB: stairs.physicsBody!, anchor: CGPoint(x: building.frame.maxX, y: stairs.frame.maxY))
+        let myJoint2 = SKPhysicsJointFixed.jointWithBodyA(building.physicsBody!, bodyB: stairs.physicsBody!, anchor: CGPoint(x: building.frame.minX, y: stairs.frame.maxY))
+        self.physicsWorld.addJoint(myJoint2)
+        self.physicsWorld.addJoint(myJoint)
     }
     
     //MARK: Physics and collisions

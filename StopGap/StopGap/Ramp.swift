@@ -9,21 +9,25 @@
 import SpriteKit
 
 class Ramp: SKSpriteNode {
-    var right:Bool
-    init(right:Bool) {
+    var lane:Int
+    init(lane:Int) {
         let texture : SKTexture
-        self.right = right
-        if right {
-            texture = SKTexture(imageNamed: "RampRight")
-        }
-        else {
+        self.lane = lane
+        switch lane {
+        case 0:
             texture = SKTexture(imageNamed: "RampLeft")
+        case 1:
+            texture = SKTexture(imageNamed: "RampMiddle")
+        case 2:
+            texture = SKTexture(imageNamed: "RampRight")
+        default:
+            texture = SKTexture(imageNamed: "RampMiddle")
         }
         super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.right = true
+        self.lane = 2
         super.init(coder: aDecoder)
     }
 
